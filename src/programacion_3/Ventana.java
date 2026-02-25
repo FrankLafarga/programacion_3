@@ -19,9 +19,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class Ventana extends JFrame {
-	
 	Color verde=new Color(30,210,30);
 	Color verdeEsmeralda = new Color(46, 204, 113);
+	
 	public Ventana() {
 		this.setVisible(true);
 		this.setSize(1000,750);

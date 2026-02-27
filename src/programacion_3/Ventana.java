@@ -1,5 +1,4 @@
 package programacion_3;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,6 +9,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -31,10 +33,39 @@ public class Ventana extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setMinimumSize(new Dimension(300,300));
 		this.setMaximumSize(new Dimension(1050,770));
-		this.setTitle("Banca Móvil Penny Bank");
+		this.setTitle("Estudiantes");
 		this.setLayout(null);
 		this.getContentPane().setBackground(verde);
+		
+		JMenuBar barra = new JMenuBar();
+		JMenu archivo = new JMenu("Archivo");
+		barra.add(archivo);
+		
+		JMenuItem  open =new JMenuItem("Abrir");
+		JMenuItem  close =new JMenuItem("Cerrar");
+		JMenuItem  save=new JMenuItem("Guardar");
+		JMenuItem  NewFile =new JMenuItem("Nuevo");
+		archivo.add(open);
+		archivo.add(close);
+		archivo.add(save);
+		archivo.add(NewFile);
+
+		JMenu submenu=new JMenu("Otros");
+		archivo.addSeparator();
+		JMenuItem menuItem = new JMenuItem("Marcar Favorito");
+		submenu.add(menuItem);
+		menuItem = new JMenuItem("Desmarcar Favorito");
+		archivo.add(submenu);
+		submenu.add(menuItem);
+
+		this.setJMenuBar(barra);
+		this.add(barra);
 		this.users();
+		this.repaint();
+		this.revalidate();
+		
+		
+		
 	}
 	
 	

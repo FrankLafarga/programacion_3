@@ -1,10 +1,8 @@
 package programacion_3;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -326,5 +324,12 @@ public class Ventana extends JFrame {
 		
 		users.repaint();
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

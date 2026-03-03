@@ -1,9 +1,14 @@
 package programacion_3;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -20,13 +25,20 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class Ventana extends JFrame {
-	Color verde=new Color(10,160,10);
-	Color verdeEsmeralda = new Color(46, 204, 113);
+public class Ventana extends JFrame implements ActionListener {
+	Color verde=new Color(10,120,10);
+	Color verdeClaro=new Color(160,230,160);
+	Color verdeEsmeralda = new Color(46, 160, 113);
+	Color verdeHover = new Color(30, 180, 120);  
 	Color grisClaro = new Color(180, 204, 180);
-
+	Color blancof= new Color(240,240,240);
+	String titulo="Hola...";
+	private JPanel contenedor;
+	private JPanel cargando;
+	private JButton acceder;
 	
 	public Ventana() {
+		
 		this.setVisible(true);
 		this.setSize(1000,750);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,7 +47,8 @@ public class Ventana extends JFrame {
 		this.setMaximumSize(new Dimension(1050,770));
 		this.setTitle("Estudiantes");
 		this.setLayout(null);
-		this.getContentPane().setBackground(verde);
+		this.getContentPane().setBackground(verdeClaro);
+		
 		
 		JMenuBar barra = new JMenuBar();
 		JMenu archivo = new JMenu("Archivo");
@@ -52,7 +65,7 @@ public class Ventana extends JFrame {
 
 		JMenu submenu=new JMenu("Otros");
 		archivo.addSeparator();
-		JMenuItem menuItem = new JMenuItem("Marcar Favorito");
+		JMenuItem menuItem = new JMenuItem(titulo);
 		submenu.add(menuItem);
 		menuItem = new JMenuItem("Desmarcar Favorito");
 		archivo.add(submenu);
@@ -60,7 +73,18 @@ public class Ventana extends JFrame {
 
 		this.setJMenuBar(barra);
 		this.add(barra);
-		this.users();
+		this.login();
+		
+		{JLabel ventanaTituloLogin = new JLabel(titulo);
+		ventanaTituloLogin.setSize(300,30);
+		ventanaTituloLogin.setLocation(350,45);
+		ventanaTituloLogin.setOpaque(false);
+		ventanaTituloLogin.setForeground(verde);
+		ventanaTituloLogin.setFont(new Font("Tahoma",Font.BOLD,30));
+		ventanaTituloLogin.setHorizontalAlignment(JLabel.CENTER);
+		this.add(ventanaTituloLogin);
+		}
+		
 		this.repaint();
 		this.revalidate();
 		
@@ -70,22 +94,28 @@ public class Ventana extends JFrame {
 	
 	
 	public void login() {
-		JPanel contenedor = new JPanel();
-		contenedor.setOpaque(true);
-		contenedor.setBackground(new Color(215,220,215));
-		contenedor.setSize(500,750);
-		contenedor.setLocation(0,0);		
+		titulo="INICIO DE SESIÓN";
+		contenedor = new JPanel();
+		contenedor.setOpaque(false);
+		contenedor.setBackground(new Color(240,240,240));
+		contenedor.setSize(500,500);
+		contenedor.setLocation(250,100);		
 		contenedor.setLayout(null);
 		this.add(contenedor);
 		
-		//titulo de bienvenida
+		Icono plantaa = new Icono("planta.jpg",1000,750);
+		plantaa.setLocation(0,0);
+		plantaa.setOpaque(true);
+		this.add(plantaa);
+		
+		//titulo de bienvenida		
 		JLabel title_login = new JLabel();
-		title_login.setText("PENNY BANK");
-		title_login.setSize(200,30);
-		title_login.setLocation(150,80);
+		title_login.setText("BIENVENIDO");
+		title_login.setSize(500,50);
+		title_login.setLocation(0,40);
 		title_login.setOpaque(false);
-		title_login.setForeground(verde);
-		title_login.setFont(new Font("Tahoma",Font.BOLD,30));
+		title_login.setForeground(Color.black);
+		title_login.setFont(new Font("Times New Roman",Font.BOLD,60));
 		title_login.setHorizontalAlignment(JLabel.CENTER);
 		contenedor.add(title_login);
 		
@@ -94,7 +124,7 @@ public class Ventana extends JFrame {
 		userlabel.setSize(200,30);
 		userlabel.setLocation(75,165);
 		userlabel.setOpaque(false);
-		userlabel.setFont(new Font("Arial",Font.BOLD,16));
+		userlabel.setFont(new Font("Arial",Font.ITALIC,16));
 		userlabel.setHorizontalAlignment(JLabel.CENTER);
 		userlabel.setForeground(Color.black);
 		contenedor.add(userlabel);
@@ -103,6 +133,7 @@ public class Ventana extends JFrame {
 		JTextField username = new JTextField();
 		username.setSize(300,30);
 		username.setLocation(100,190);
+		username.setBackground(blancof);
 		username.setFont(new Font("",Font.BOLD,20));
 		contenedor.add(username);
 		
@@ -112,7 +143,7 @@ public class Ventana extends JFrame {
 		pswlabel.setSize(200,30);
 		pswlabel.setLocation(45,235);
 		pswlabel.setOpaque(false);
-		pswlabel.setFont(new Font("Arial",Font.BOLD,16));
+		pswlabel.setFont(new Font("Arial",Font.ITALIC,16));
 		pswlabel.setHorizontalAlignment(JLabel.CENTER);
 		pswlabel.setForeground(Color.black);
 		contenedor.add(pswlabel);
@@ -120,24 +151,51 @@ public class Ventana extends JFrame {
 		JPasswordField psw = new JPasswordField();
 		psw.setSize(300,30);
 		psw.setLocation(100,260);
+		psw.setBackground(blancof);
 		psw.setFont(new Font("",Font.BOLD,20));
 		contenedor.add(psw);
 		
-		JButton acceder = new JButton();
+		acceder = new JButton();
 		acceder.setText("Acceder");
-		acceder.setLocation(155,400);
+		acceder.setLocation(155,370);
 		acceder.setSize(190,50);
-		acceder.setBackground(new Color(10,250,20));
-		acceder.setFont(new Font("Tahoma", Font.BOLD, 17));
+		acceder.setBackground(verdeClaro);
+		acceder.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		contenedor.add(acceder);
+		acceder.addActionListener(this);
+		acceder.addMouseListener(new java.awt.event.MouseAdapter() {
+
+		    @Override
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		        acceder.setBackground(verdeHover);
+		        acceder.setForeground(Color.WHITE); 
+		        acceder.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+		    }
+
+		    @Override
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		        acceder.setBackground(verdeClaro);
+		        acceder.setForeground(Color.BLACK);
+		        acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		    }
+		});
+		    
+		JLabel registrarC = new JLabel();
+		registrarC.setText("No tengo una cuenta...");
+		registrarC.setLocation(170,478);
+		registrarC.setSize(210,20);
+		registrarC.setOpaque(false);
+		registrarC.setForeground(Color.black);
+		registrarC.setFont(new Font("Tahoma", Font.ITALIC, 17));
+		contenedor.add(registrarC);
 	
 		JLabel recuperar = new JLabel();
 		recuperar.setText("Recuperar contraseña");
 		recuperar.setSize(200,30);
 		recuperar.setLocation(230,290);
 		recuperar.setOpaque(false);
-		recuperar.setFont(new Font("Arial",Font.BOLD,13));
+		recuperar.setFont(new Font("Arial",Font.ITALIC,13));
 		recuperar.setHorizontalAlignment(JLabel.CENTER);
 		recuperar.setForeground(Color.blue);
 		contenedor.add(recuperar);
@@ -147,8 +205,20 @@ public class Ventana extends JFrame {
 		recordar.setLocation(96,290);
 		recordar.setOpaque(false);
 		recordar.setText("Recordarme");
-		recordar.setFont(new Font("Arial",Font.BOLD,13));
+		recordar.setFont(new Font("Arial",Font.ITALIC,13));
 		contenedor.add(recordar);
+		
+		
+		//iconos
+		Icono iconoUsuario = new Icono("usuarioVerde.png",35,35);
+		iconoUsuario.setLocation(62,187);
+		iconoUsuario.setOpaque(true);
+		contenedor.add(iconoUsuario);
+		
+		Icono iconoCandado = new Icono("candadoVerde.png",35,35);
+		iconoCandado.setLocation(62,254);
+		iconoCandado.setOpaque(true);
+		contenedor.add(iconoCandado);
 		
 		contenedor.repaint();
 		contenedor.revalidate();
@@ -356,11 +426,55 @@ public class Ventana extends JFrame {
 		users.repaint();
 	}
 	
+	//metodos para hacer que el botonm acceder sea interactivo
+	public void mostrarCargando() {
+
+        cargando = new JPanel();
+        cargando.setBounds(250,100,500,500);
+        cargando.setLayout(null);
+        cargando.setOpaque(true);
+        cargando.setBackground(Color.WHITE);
+
+        Icono gifCargando = new Icono("cargandoVerde.gif",188,188,true);
+        gifCargando.setBounds(156,80,188,188);
+        cargando.add(gifCargando);
+
+        JLabel textoIniciando = new JLabel("Iniciando sesión...");
+        textoIniciando.setBounds(50,350,400,30);
+        textoIniciando.setOpaque(true);
+        textoIniciando.setForeground(verdeEsmeralda);
+        textoIniciando.setFont(new Font("Tahoma",Font.BOLD,30));
+        textoIniciando.setHorizontalAlignment(JLabel.CENTER);
+        cargando.add(textoIniciando);
+
+        this.remove(contenedor);
+        this.add(cargando);
+        this.revalidate();
+        this.repaint();
+        volverALoginEn3Segundos();
+    }
 	
-	
-	
-	
-	
-	
-	
+	private void volverALoginEn3Segundos() {
+
+	    javax.swing.Timer timer = new javax.swing.Timer(3000, e -> {
+
+	        this.remove(cargando);
+	        login();              
+	        this.revalidate();
+	        this.repaint();
+
+	    });
+
+	    timer.setRepeats(false);
+	    timer.start();
+	}
+
+
+	@Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == acceder) {
+            mostrarCargando();
+        }
+    }
 }

@@ -26,8 +26,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class Ventana extends JFrame implements ActionListener {
-	Color verde=new Color(10,120,10);
-	Color verdeClaro=new Color(160,230,160);
+	Color verde=new Color(140,180,140);
+	Color verdeClaro=new Color(230,245,230);
 	Color verdeEsmeralda = new Color(46, 160, 113);
 	Color verdeHover = new Color(30, 180, 120);  
 	Color grisClaro = new Color(180, 204, 180);
@@ -35,7 +35,7 @@ public class Ventana extends JFrame implements ActionListener {
 	String titulo="Hola...";
 	private JPanel contenedor;
 	private JPanel cargando;
-	private JButton acceder;
+	private JButton acceder,registrarC;
 	
 	public Ventana() {
 		
@@ -48,32 +48,8 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setTitle("Estudiantes");
 		this.setLayout(null);
 		this.getContentPane().setBackground(verdeClaro);
-		
-		
-		JMenuBar barra = new JMenuBar();
-		JMenu archivo = new JMenu("Archivo");
-		barra.add(archivo);
-		
-		JMenuItem  open =new JMenuItem("Abrir");
-		JMenuItem  close =new JMenuItem("Cerrar");
-		JMenuItem  save=new JMenuItem("Guardar");
-		JMenuItem  NewFile =new JMenuItem("Nuevo");
-		archivo.add(open);
-		archivo.add(close);
-		archivo.add(save);
-		archivo.add(NewFile);
-
-		JMenu submenu=new JMenu("Otros");
-		archivo.addSeparator();
-		JMenuItem menuItem = new JMenuItem(titulo);
-		submenu.add(menuItem);
-		menuItem = new JMenuItem("Desmarcar Favorito");
-		archivo.add(submenu);
-		submenu.add(menuItem);
-
-		this.setJMenuBar(barra);
-		this.add(barra);
-		this.login();
+		menu();
+		login();
 		
 		{JLabel ventanaTituloLogin = new JLabel(titulo);
 		ventanaTituloLogin.setSize(300,30);
@@ -159,7 +135,7 @@ public class Ventana extends JFrame implements ActionListener {
 		acceder.setText("Acceder");
 		acceder.setLocation(155,370);
 		acceder.setSize(190,50);
-		acceder.setBackground(verdeClaro);
+		acceder.setBackground(verde);
 		acceder.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		contenedor.add(acceder);
@@ -175,19 +151,35 @@ public class Ventana extends JFrame implements ActionListener {
 
 		    @Override
 		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        acceder.setBackground(verdeClaro);
+		        acceder.setBackground(verde);
 		        acceder.setForeground(Color.BLACK);
 		        acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		    }
 		});
 		    
-		JLabel registrarC = new JLabel();
+		registrarC = new JButton();
 		registrarC.setText("No tengo una cuenta...");
-		registrarC.setLocation(170,478);
+		registrarC.setLocation(145,478);
 		registrarC.setSize(210,20);
 		registrarC.setOpaque(false);
 		registrarC.setForeground(Color.black);
 		registrarC.setFont(new Font("Tahoma", Font.ITALIC, 17));
+		registrarC.setContentAreaFilled(false);
+		registrarC.setBorderPainted(false);     
+		registrarC.setFocusPainted(false);
+		registrarC.addActionListener(this);
+		registrarC.addMouseListener(new java.awt.event.MouseAdapter() {
+
+		    @Override
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		        registrarC.setForeground(Color.blue); 
+		    }
+
+		    @Override
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	registrarC.setForeground(Color.black);
+		    }
+		});
 		contenedor.add(registrarC);
 	
 		JLabel recuperar = new JLabel();
@@ -409,14 +401,24 @@ public class Ventana extends JFrame implements ActionListener {
 			    {"23102311", "Camila", "Ortega Flores", "2", "9.6", "Editar/Eliminar"},
 			    {"20103422", "Jorge Iván", "Castillo Vega", "9", "8.2", "Editar/Eliminar"},
 			    {"22107890", "Fernanda", "Mendoza Salas", "1", "9.8", "Editar/Eliminar"},
-			    {"21105673", "Ricardo", "Delgado Romero", "5", "8.6", "Editar/Eliminar"}
+			    {"21105673", "Ricardo", "Delgado Romero", "5", "8.6", "Editar/Eliminar"},
+			    {"22108812", "Alejandro", "Guzmán Orozco", "4", "8.5", "Editar/Eliminar"},
+			    {"23109923", "Ximena", "Rojas Duarte", "2", "9.4", "Editar/Eliminar"},
+			    {"21101145", "Roberto", "Villarreal Kent", "6", "7.9", "Editar/Eliminar"},
+			    {"20102256", "Paola", "Soto Mayorga", "8", "9.0", "Editar/Eliminar"},
+			    {"22103367", "Mauricio", "Luna Valdés", "4", "8.8", "Editar/Eliminar"},
+			    {"23104478", "Daniela", "Bravo Esparza", "1", "9.7", "Editar/Eliminar"},
+			    {"21105589", "Gabriel", "Peralta Silva", "7", "8.3", "Editar/Eliminar"},
+			    {"20106690", "Lucía", "Castañeda Ríos", "9", "9.9", "Editar/Eliminar"},
+			    {"22107701", "Esteban", "Meza Galindo", "3", "8.1", "Editar/Eliminar"},
+			    {"23108812", "Natalia", "Vargas Montes", "2", "9.3", "Editar/Eliminar"}
 			};
 		
 		JTable users_table=new JTable(table_content,table_head);
 		JScrollPane scrollPane=new JScrollPane(users_table);
 
 		scrollPane.setLocation(30,200);
-		scrollPane.setSize(800,100);
+		scrollPane.setSize(800,150);
 		users_table.setBorder(BorderFactory.createLineBorder(Color.black));
 		users.add(scrollPane);
 		
@@ -424,6 +426,32 @@ public class Ventana extends JFrame implements ActionListener {
 		
 		
 		users.repaint();
+	}
+	
+	public void menu() {
+		JMenuBar barra = new JMenuBar();
+		JMenu archivo = new JMenu("Archivo");
+		barra.add(archivo);
+		
+		JMenuItem  open =new JMenuItem("Abrir");
+		JMenuItem  close =new JMenuItem("Cerrar");
+		JMenuItem  save=new JMenuItem("Guardar");
+		JMenuItem  NewFile =new JMenuItem("Nuevo");
+		archivo.add(open);
+		archivo.add(close);
+		archivo.add(save);
+		archivo.add(NewFile);
+
+		JMenu submenu=new JMenu("Otros");
+		archivo.addSeparator();
+		JMenuItem menuItem = new JMenuItem(titulo);
+		submenu.add(menuItem);
+		menuItem = new JMenuItem("Desmarcar Favorito");
+		archivo.add(submenu);
+		submenu.add(menuItem);
+
+		this.setJMenuBar(barra);
+		this.add(barra);
 	}
 	
 	//metodos para hacer que el botonm acceder sea interactivo
@@ -451,15 +479,18 @@ public class Ventana extends JFrame implements ActionListener {
         this.add(cargando);
         this.revalidate();
         this.repaint();
-        volverALoginEn3Segundos();
+        entrarEn3Segundos();
     }
 	
-	private void volverALoginEn3Segundos() {
+	private void entrarEn3Segundos() {
 
 	    javax.swing.Timer timer = new javax.swing.Timer(3000, e -> {
 
-	        this.remove(cargando);
-	        login();              
+	    	this.getContentPane().removeAll();	
+	    	this.revalidate();
+		    this.repaint();
+	    	users();     
+	    	menu();
 	        this.revalidate();
 	        this.repaint();
 
@@ -475,6 +506,14 @@ public class Ventana extends JFrame implements ActionListener {
 
         if (e.getSource() == acceder) {
             mostrarCargando();
+        }
+        if(e.getSource() == registrarC ) {
+        	this.getContentPane().removeAll();
+        	this.remove(contenedor);
+        	registro();
+        	this.repaint();
+        	this.revalidate();
+        	
         }
     }
 }

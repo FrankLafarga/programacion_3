@@ -19,7 +19,7 @@ public class Icono extends JLabel{
             getClass().getResource("/programacion_3/resources/" + nombre)
         );
 
-        setIcon(icono);      // ← mantiene la animación
+        setIcon(icono);      
         setSize(ancho,alto);
         setOpaque(false);
     }

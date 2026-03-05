@@ -1,8 +1,11 @@
 package programacion_3;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,6 +31,7 @@ import javax.swing.JTextField;
 public class Ventana extends JFrame implements ActionListener {
 	Color verde=new Color(140,180,140);
 	Color verdeClaro=new Color(230,245,230);
+	Color rojoClaro = new Color(255, 180, 180);
 	Color verdeEsmeralda = new Color(46, 160, 113);
 	Color verdeHover = new Color(30, 180, 120);  
 	Color grisClaro = new Color(180, 204, 180);
@@ -49,17 +53,8 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setLayout(null);
 		this.getContentPane().setBackground(verdeClaro);
 		menu();
-		login();
-		
-		{JLabel ventanaTituloLogin = new JLabel(titulo);
-		ventanaTituloLogin.setSize(300,30);
-		ventanaTituloLogin.setLocation(350,45);
-		ventanaTituloLogin.setOpaque(false);
-		ventanaTituloLogin.setForeground(verde);
-		ventanaTituloLogin.setFont(new Font("Tahoma",Font.BOLD,30));
-		ventanaTituloLogin.setHorizontalAlignment(JLabel.CENTER);
-		this.add(ventanaTituloLogin);
-		}
+		calcular_intereses();
+		//login();
 		
 		this.repaint();
 		this.revalidate();
@@ -454,6 +449,136 @@ public class Ventana extends JFrame implements ActionListener {
 		this.add(barra);
 	}
 	
+	public void calcular_intereses(){
+		JPanel contenedor_int = new JPanel();
+		contenedor_int.setOpaque(true);
+		contenedor_int.setBackground(new Color(240,240,240));
+		contenedor_int.setSize(1000,650);
+		contenedor_int.setLocation(0,15);		
+		contenedor_int.setLayout(new BorderLayout(0,5));
+		this.add(contenedor_int);
+		
+		JLabel title = new JLabel("Calculador de Interés");
+		title.setFont(new Font("Tahoma", Font.BOLD, 30));
+		title.setBackground(blancof);
+		title.setForeground(verdeHover);
+		title.setHorizontalAlignment(JLabel.CENTER);
+		title.setBorder(BorderFactory.createLineBorder(blancof,10));
+		contenedor_int.add(title,BorderLayout.NORTH);
+		
+		JPanel panelDatos = new JPanel();
+		panelDatos.setOpaque(true);
+		panelDatos.setBackground(Color.white);
+		panelDatos.setPreferredSize(new Dimension(0,100));
+		panelDatos.setLayout(new GridLayout(4,2));
+		contenedor_int.add(panelDatos,BorderLayout.CENTER);
+		
+		JLabel capital = new JLabel("Capital:");
+		capital.setOpaque(true);
+		capital.setBackground(blancof);
+		capital.setFont(new Font("Arial", Font.ITALIC, 20));
+		capital.setHorizontalAlignment(JLabel.CENTER);
+		capital.setForeground(Color.black);
+		panelDatos.add(capital);
+
+		JTextField cantidad = new JTextField();
+		cantidad.setSize(300, 30);
+		cantidad.setBackground(verde);
+		cantidad.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
+		cantidad.setFont(new Font("Arial", Font.BOLD, 20));
+		panelDatos.add(cantidad);
+
+		JLabel tiempoLabel = new JLabel("Tiempo:");
+		tiempoLabel.setOpaque(true);
+		tiempoLabel.setBackground(blancof);
+		tiempoLabel.setFont(new Font("Arial", Font.ITALIC, 20));
+		tiempoLabel.setHorizontalAlignment(JLabel.CENTER);
+		tiempoLabel.setForeground(Color.black);
+		panelDatos.add(tiempoLabel);
+
+		JTextField tiempoField = new JTextField();
+		tiempoField.setSize(300, 30);
+		tiempoField.setBackground(verde);
+		tiempoField.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
+		tiempoField.setFont(new Font("Arial", Font.BOLD, 20));
+		panelDatos.add(tiempoField);
+
+		JLabel tasaLabel = new JLabel("tasa interés:");
+		tasaLabel.setOpaque(true);
+		tasaLabel.setBackground(blancof);
+		tasaLabel.setFont(new Font("Arial", Font.ITALIC, 20));
+		tasaLabel.setHorizontalAlignment(JLabel.CENTER);
+		tasaLabel.setForeground(Color.black);
+		panelDatos.add(tasaLabel);
+
+		JTextField tasaField = new JTextField();
+		tasaField.setSize(300, 30);
+		tasaField.setBackground(verde);
+		tasaField.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
+		tasaField.setFont(new Font("Arial", Font.BOLD, 20));
+		panelDatos.add(tasaField);
+
+		JButton ca = new JButton("Calcular");
+		ca.setBackground(verdeHover);
+		ca.setPreferredSize(new Dimension(76, 40));
+		ca.setForeground(Color.black);
+		ca.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
+		ca.setFont(new Font("Tahoma", Font.BOLD, 25));
+		panelDatos.add(ca);
+
+		JButton del = new JButton("Cancelar");
+		del.setBackground(grisClaro);
+		del.setForeground(Color.black);
+		del.setPreferredSize(new Dimension(80, 40));
+		del.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
+		del.setFont(new Font("Tahoma", Font.BOLD, 25));
+		panelDatos.add(del);
+		
+		JPanel panelResultados = new JPanel();
+		panelResultados.setOpaque(true);
+		panelResultados.setBackground(rojoClaro);
+		panelResultados.setPreferredSize(new Dimension(0, 120)); 
+		panelResultados.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+		panelResultados.setLayout(new GridLayout(2, 2, 10, 10));
+		contenedor_int.add(panelResultados, BorderLayout.SOUTH);
+
+		JLabel interesLabel = new JLabel("Total Interés:");
+		interesLabel.setOpaque(true);
+		interesLabel.setBackground(blancof);
+		interesLabel.setFont(new Font("Arial", Font.ITALIC, 20));
+		interesLabel.setHorizontalAlignment(JLabel.CENTER);
+		interesLabel.setForeground(Color.black);
+		panelResultados.add(interesLabel);
+
+		JTextField interesField = new JTextField();
+		interesField.setSize(300, 30);
+		interesField.setBackground(verde);
+		interesField.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
+		interesField.setFont(new Font("Arial", Font.BOLD, 20));
+		panelResultados.add(interesField);
+
+		JLabel montoLabel = new JLabel("Monto Total:");
+		montoLabel.setOpaque(true);
+		montoLabel.setBackground(blancof);
+		montoLabel.setFont(new Font("Arial", Font.ITALIC, 20));
+		montoLabel.setHorizontalAlignment(JLabel.CENTER);
+		montoLabel.setForeground(Color.black);
+		panelResultados.add(montoLabel);
+
+		JTextField montoField = new JTextField();
+		montoField.setSize(300, 30);
+		montoField.setBackground(verde);
+		montoField.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
+		montoField.setFont(new Font("Arial", Font.BOLD, 20));
+		panelResultados.add(montoField);
+		this.repaint();
+	}
+	
+	
+	
+	
+	
+	
 	//metodos para hacer que el botonm acceder sea interactivo
 	public void mostrarCargando() {
 
@@ -499,8 +624,7 @@ public class Ventana extends JFrame implements ActionListener {
 	    timer.setRepeats(false);
 	    timer.start();
 	}
-
-
+	
 	@Override
     public void actionPerformed(ActionEvent e) {
 

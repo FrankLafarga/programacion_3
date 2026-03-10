@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,6 +43,11 @@ public class Ventana extends JFrame implements ActionListener {
 	private JButton acceder,registrarC;
 	
 	public Ventana() {
+		//cambiar la Imagen de la ventana
+		ImageIcon icono = new ImageIcon(getClass().getResource("/programacion_3/resources/usuarioVerde.png"));
+		setSize(80,80);	
+		Image img = icono.getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH);
+		this.setIconImage(img);
 		
 		this.setVisible(true);
 		this.setSize(1000,750);

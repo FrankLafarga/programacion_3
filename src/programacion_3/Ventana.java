@@ -1,14 +1,21 @@
 package programacion_3;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -59,16 +66,56 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setTitle("Estudiantes");
 		this.setLayout(null);
 		this.getContentPane().setBackground(verdeClaro);
-		menu();
-		calcular_intereses();
+		//menu();
+		//calcular_intereses();
 		//login();
+		pintar();
+		
 		
 		this.repaint();
 		this.revalidate();
-		
-		
-		
 	}
+	public void pintar() {
+		JPanel pane = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D)g;
+                
+                g2d.setColor(rojoClaro);
+                g2d.setStroke(new BasicStroke(2));
+                g2d.drawLine(0, 0, 100, 100);
+                g2d.drawLine(200, 200, 500, 200);
+                g2d.drawRect(250,200,100,100 );
+                g2d.setColor(azulO);
+                g2d.drawOval(400,100,70,50);
+                g2d.drawOval(250,100,70,50);
+                g2d.setStroke(new BasicStroke(5));
+                g2d.drawArc(320,145,90,50,0,180);
+                g2d.drawPolygon(new int []{200,100,300},new int [] {100,300,500},3);
+                
+                g2d.setColor(verdeHover);
+                g2d.fillRect(500, 500,100,100);
+                g2d.setColor(Color.orange);
+                g2d.fillArc(300,250,100,100,0,300);
+
+                g2d.fillPolygon(new int []{500,400,600},new int [] {300,400,800},3);
+                
+                
+                try {	
+                BufferedImage image = ImageIO.read(new File("/programacion_3/resources/candadoVerde.png"));
+                g2d.drawImage(image ,500,9,null);
+                }catch (IOException e) {
+                	e.printStackTrace();
+                }
+            }
+       
+        };
+        pane.setBackground(blancof);
+        pane.setSize(1000,750);
+        pane.setLocation(0,0);
+        this.add(pane);
+    }
 	
 	
 	public void login() {

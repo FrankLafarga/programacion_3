@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,23 +30,25 @@ import javax.swing.JTextField;
 
 public class Ventana extends JFrame implements ActionListener {
 	Color verde=new Color(140,180,140);
+	Color verdeO=new Color(30,100,70);
+	Color verdeHoja=new Color(200,250,200);
 	Color verdeClaro=new Color(230,245,230);
-	Color rojoClaro = new Color(255, 180, 180);
-	Color verdeEsmeralda = new Color(46, 160, 113);
+	Color rojoClaro = new Color(180,50,50);
+	Color verdeEsmeralda = new Color(46, 160, 110);
 	Color verdeHover = new Color(30, 180, 120);  
 	Color grisClaro = new Color(180, 204, 180);
 	Color blancof= new Color(240,240,240);
+	Color grisClarito = new Color(200,200,200);
+	Color gris = new Color(200,200,200);
+	Color azulMar = new Color(0, 123, 255);
+	Color azulO = new Color(0,70,120);
+	
 	String titulo="Hola...";
 	private JPanel contenedor;
 	private JPanel cargando;
 	private JButton acceder,registrarC;
 	
 	public Ventana() {
-		//cambiar la Imagen de la ventana
-		ImageIcon icono = new ImageIcon(getClass().getResource("/programacion_3/resources/usuarioVerde.png"));
-		setSize(80,80);	
-		Image img = icono.getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH);
-		this.setIconImage(img);
 		
 		this.setVisible(true);
 		this.setSize(1000,750);
@@ -458,30 +459,43 @@ public class Ventana extends JFrame implements ActionListener {
 	public void calcular_intereses(){
 		JPanel contenedor_int = new JPanel();
 		contenedor_int.setOpaque(true);
-		contenedor_int.setBackground(new Color(240,240,240));
+		contenedor_int.setBackground(azulO);
 		contenedor_int.setSize(1000,650);
-		contenedor_int.setLocation(0,15);		
+		contenedor_int.setLocation(0,20);		
 		contenedor_int.setLayout(new BorderLayout(0,5));
 		this.add(contenedor_int);
 		
 		JLabel title = new JLabel("Calculador de Interés");
 		title.setFont(new Font("Tahoma", Font.BOLD, 30));
-		title.setBackground(blancof);
-		title.setForeground(verdeHover);
+		title.setOpaque(false);
+		title.setForeground(blancof);
 		title.setHorizontalAlignment(JLabel.CENTER);
-		title.setBorder(BorderFactory.createLineBorder(blancof,10));
 		contenedor_int.add(title,BorderLayout.NORTH);
 		
 		JPanel panelDatos = new JPanel();
+		panelDatos.setSize(0,100);
 		panelDatos.setOpaque(true);
-		panelDatos.setBackground(Color.white);
-		panelDatos.setPreferredSize(new Dimension(0,100));
-		panelDatos.setLayout(new GridLayout(4,2));
+		panelDatos.setBackground(grisClarito);
+		panelDatos.setLayout(new GridLayout(8,1,10,10));
 		contenedor_int.add(panelDatos,BorderLayout.CENTER);
 		
-		JLabel capital = new JLabel("Capital:");
-		capital.setOpaque(true);
-		capital.setBackground(blancof);
+		JPanel panelEspaciador = new JPanel();
+		panelEspaciador.setOpaque(true);
+		panelEspaciador.setBackground(grisClarito);
+		panelEspaciador.setPreferredSize(new Dimension(300,0));
+		panelEspaciador.setLayout(null);
+		contenedor_int.add(panelEspaciador,BorderLayout.EAST);
+		
+		JPanel panelEspaciador2 = new JPanel();
+		panelEspaciador2.setOpaque(true);
+		panelEspaciador2.setBackground(grisClarito);
+		panelEspaciador2.setPreferredSize(new Dimension(300,0));
+		panelEspaciador2.setLayout(null);
+		contenedor_int.add(panelEspaciador2,BorderLayout.WEST);
+		
+		JLabel capital = new JLabel("Capital incial $");
+		capital.setOpaque(false);
+		capital.setPreferredSize(new Dimension (0,10));
 		capital.setFont(new Font("Arial", Font.ITALIC, 20));
 		capital.setHorizontalAlignment(JLabel.CENTER);
 		capital.setForeground(Color.black);
@@ -489,14 +503,14 @@ public class Ventana extends JFrame implements ActionListener {
 
 		JTextField cantidad = new JTextField();
 		cantidad.setSize(300, 30);
-		cantidad.setBackground(verde);
+		cantidad.setPreferredSize(new Dimension (0,10));
+		cantidad.setBackground(Color.white);
 		cantidad.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
 		cantidad.setFont(new Font("Arial", Font.BOLD, 20));
 		panelDatos.add(cantidad);
 
-		JLabel tiempoLabel = new JLabel("Tiempo:");
-		tiempoLabel.setOpaque(true);
-		tiempoLabel.setBackground(blancof);
+		JLabel tiempoLabel = new JLabel("Tiempo (meses)");
+		tiempoLabel.setOpaque(false);
 		tiempoLabel.setFont(new Font("Arial", Font.ITALIC, 20));
 		tiempoLabel.setHorizontalAlignment(JLabel.CENTER);
 		tiempoLabel.setForeground(Color.black);
@@ -504,14 +518,13 @@ public class Ventana extends JFrame implements ActionListener {
 
 		JTextField tiempoField = new JTextField();
 		tiempoField.setSize(300, 30);
-		tiempoField.setBackground(verde);
+		tiempoField.setBackground(Color.white);
 		tiempoField.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
 		tiempoField.setFont(new Font("Arial", Font.BOLD, 20));
 		panelDatos.add(tiempoField);
 
-		JLabel tasaLabel = new JLabel("tasa interés:");
-		tasaLabel.setOpaque(true);
-		tasaLabel.setBackground(blancof);
+		JLabel tasaLabel = new JLabel("tasa de interés anual %");
+		tasaLabel.setOpaque(false);
 		tasaLabel.setFont(new Font("Arial", Font.ITALIC, 20));
 		tasaLabel.setHorizontalAlignment(JLabel.CENTER);
 		tasaLabel.setForeground(Color.black);
@@ -519,22 +532,22 @@ public class Ventana extends JFrame implements ActionListener {
 
 		JTextField tasaField = new JTextField();
 		tasaField.setSize(300, 30);
-		tasaField.setBackground(verde);
+		tasaField.setBackground(Color.white);
 		tasaField.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
 		tasaField.setFont(new Font("Arial", Font.BOLD, 20));
 		panelDatos.add(tasaField);
 
-		JButton ca = new JButton("Calcular");
-		ca.setBackground(verdeHover);
+		JButton ca = new JButton("Calcular interés");
+		ca.setBackground(azulMar);
 		ca.setPreferredSize(new Dimension(76, 40));
-		ca.setForeground(Color.black);
+		ca.setForeground(Color.white);
 		ca.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
 		ca.setFont(new Font("Tahoma", Font.BOLD, 25));
 		panelDatos.add(ca);
 
-		JButton del = new JButton("Cancelar");
-		del.setBackground(grisClaro);
-		del.setForeground(Color.black);
+		JButton del = new JButton("limpiar");
+		del.setBackground(Color.gray);
+		del.setForeground(Color.white);
 		del.setPreferredSize(new Dimension(80, 40));
 		del.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
 		del.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -556,9 +569,10 @@ public class Ventana extends JFrame implements ActionListener {
 		interesLabel.setForeground(Color.black);
 		panelResultados.add(interesLabel);
 
-		JTextField interesField = new JTextField();
+		JTextField interesField = new JTextField("$0.00");
 		interesField.setSize(300, 30);
-		interesField.setBackground(verde);
+		interesField.setForeground(verdeO);
+		interesField.setBackground(verdeHoja);
 		interesField.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
 		interesField.setFont(new Font("Arial", Font.BOLD, 20));
 		panelResultados.add(interesField);
@@ -571,9 +585,10 @@ public class Ventana extends JFrame implements ActionListener {
 		montoLabel.setForeground(Color.black);
 		panelResultados.add(montoLabel);
 
-		JTextField montoField = new JTextField();
+		JTextField montoField = new JTextField("$0.00");
 		montoField.setSize(300, 30);
-		montoField.setBackground(verde);
+		montoField.setBackground(verdeHoja);
+		montoField.setForeground(verdeO);
 		montoField.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
 		montoField.setFont(new Font("Arial", Font.BOLD, 20));
 		panelResultados.add(montoField);

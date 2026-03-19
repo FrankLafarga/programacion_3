@@ -68,7 +68,7 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setLayout(null);
 		this.getContentPane().setBackground(verdeClaro);
 		menu();
-		login();
+		registro();
 		
 		
 		this.repaint();
@@ -411,7 +411,66 @@ public class Ventana extends JFrame implements ActionListener {
 				crearCuenta.setFont(new Font("Tahoma", Font.BOLD, 17));
 				crearCuenta.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 				crearCuenta.setFocusable(false);
+				
+				crearCuenta.addActionListener(new ActionListener() {
 
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						int contador=0;
+						String username_val2 = username2.getText();
+						if(username_val2.equals("")) {
+							System.out.println("Error");
+							JOptionPane.showMessageDialog(contenedor, "Error al registrarse, verifique sus datos");
+							username2.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+							
+						}else {username2.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
+						contador++;
+						}
+						
+						if(biografia.getText().equals("")) {
+							System.out.println("Error");
+							biografia.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+							
+						}else {biografia.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
+						contador++;
+						}
+						
+						if(debito.isSelected()==true||credito.isSelected()==true||inversiones.isSelected()==true) {
+							debito.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));
+							credito.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));
+							inversiones.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));
+						}else {
+							debito.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+							credito.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+							inversiones.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+						} 
+						
+						
+						
+						
+					
+						
+						
+						
+					}
+				});
+				
+				ActionListener accionRadio = new ActionListener() {
+				    @Override
+				    public void actionPerformed(ActionEvent e) {
+				        if (aceptar.isSelected()) {
+				            aceptar.setForeground(Color.GREEN);
+				            rechazar.setForeground(Color.GRAY);
+				        } else if (rechazar.isSelected()) {
+				            rechazar.setForeground(Color.RED);
+				            aceptar.setForeground(Color.GRAY);
+							JOptionPane.showMessageDialog(contenedor, "Error al registrarse, debe aceptar los términos.");
+				        }
+				    }
+				};
+
+				aceptar.addActionListener(accionRadio);
+				rechazar.addActionListener(accionRadio);
 				registro.add(crearCuenta);
 				
 				registro.repaint();

@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -66,157 +67,14 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setTitle("Estudiantes");
 		this.setLayout(null);
 		this.getContentPane().setBackground(verdeClaro);
-		//menu();
-		//calcular_intereses();
-		//login();
-		pintar();
+		menu();
+		login();
 		
 		
 		this.repaint();
 		this.revalidate();
 	}
-	public void pintar() {
-		Color cremaPared = new Color(245, 212, 114);
-		Color sombraCrema = new Color(201, 161, 74);
-		Color cafePuerta = new Color(133, 102, 33);
-		Color cafeOscuro = new Color(92, 70, 23);
-		Color blanco = new Color(245, 245, 245);
-		Color grisPiso = new Color(102, 102, 102);
-		Color grisOscuro = new Color(70,70,70);
-		Color azulCielo = new Color(0, 191, 255);
-		Color maderaValla = new Color(255, 184, 77);
-		Color atrasValla = new Color(211, 151, 64);
-		Color verdeOscuro = new Color(51, 77, 0);
-		Color verdePasto = new Color(119, 153, 51);
-		Color tierraClara = new Color(204, 187, 102);
-		
-		JPanel pane = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D)g;     
-                
-                g2d.setStroke(new BasicStroke(2));
-                
-                //g2d.drawLine(0, 0, 100, 100);
-                //g2d.drawLine(200, 200, 500, 200);
-                //g2d.drawRect(250,200,100,100 );
-                //g2d.drawOval(250,100,70,50);
-                //g2d.drawArc(320,145,90,50,0,180);}
-                
-                
-                //valla      
-                g2d.setColor(atrasValla);
-                g2d.fillRect(0, 490,1000,80);
-                
-                g2d.setColor(maderaValla);               
-                g2d.fillPolygon(new int []{0, 0, 35, 70, 70}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{93, 93, 128, 163, 163}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{186, 186, 221, 256, 256}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{279, 279, 314, 349, 349}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{372, 372, 407, 442, 442}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{465, 465, 500, 535, 535}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{558, 558, 593, 628, 628}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{651, 651, 686, 721, 721}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{744, 744, 779, 814, 814}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{837, 837, 872, 907, 907}, new int [] {620, 350, 310, 350, 620}, 5);
-                g2d.fillPolygon(new int []{930, 930, 965, 1000, 1000}, new int [] {620, 350, 310, 350, 620}, 5);               
-                                                
-                //chimenea
-                g2d.setColor(grisPiso);
-                g2d.fillRect(600, 150,70,90);
-                g2d.fillRect(590, 120,90,40);
-                
-                g2d.setColor(grisOscuro);
-                g2d.fillPolygon(new int []{596,670,670},new int [] {160,160,170},3);
-                
-                //pared casa
-                g2d.setColor(cremaPared);
-                g2d.fillRect(325, 230,350,350);
-                
-                g2d.setColor(sombraCrema);
-                g2d.fillPolygon(new int []{325,675,675},new int [] {280,350,280},3);   
-                g2d.fillRect(645,470,30,20);
-                
-                g2d.setStroke(new BasicStroke(3));
-                g2d.setColor(cafePuerta);
-                g2d.drawLine(325, 300, 673, 300);
-                g2d.drawLine(325, 335, 673, 335);
-                g2d.drawLine(325, 370, 673, 370);
-                g2d.drawLine(325, 405, 673, 405);
-                g2d.drawLine(325, 440, 673, 440);
-                g2d.drawLine(325, 475, 673, 475);
-                g2d.drawLine(325, 510, 673, 510);
-                g2d.drawLine(325, 545, 673, 545);
-                g2d.drawLine(325, 580, 673, 580);
-                
-                //nubes 
-                g2d.setColor(blanco);
-                                                
-                g2d.fillArc(50,20,50,40,0,360);
-                g2d.fillArc(80,10,60,50,0,360);
-                g2d.fillArc(120,20,50,40,0,360);
-
-                g2d.fillArc(450,50,50,40,0,360);
-                g2d.fillArc(480,40,60,50,0,360);
-                g2d.fillArc(520,50,50,40,0,360);
-                
-                g2d.fillArc(800,30,50,40,0,360);
-                g2d.fillArc(830,20,60,50,0,360);
-                g2d.fillArc(870,30,50,40,0,360);
-                
-                
-                //Techo
-                g2d.setColor(rojoClaro);
-                g2d.fillPolygon(new int []{230,420,770},new int [] {280,90,280},3);                                                  
-                
-                //puerta
-                g2d.setColor(cafePuerta);
-                g2d.fillRect(370, 368,100,200);
-                
-                g2d.setStroke(new BasicStroke(5));
-                g2d.setColor(cafeOscuro);
-                g2d.drawRect(370,368,100,200 );
-                
-                g2d.setColor(blanco);
-                g2d.fillArc(440,460,15,15,0,360);
-                               
-                // ventana
-                g2d.setColor(sombraCrema);
-                g2d.fillPolygon(new int []{540,675,675},new int [] {485,485,508},3);
-                
-                g2d.setColor(rojoClaro);
-                g2d.fillRect(540,368,103,102 );
-                
-                g2d.setColor(blanco);
-                g2d.fillRect(548,376,40,40);  
-                g2d.fillRect(595,376,40,40);  
-                g2d.fillRect(548,422,40,40);  
-                g2d.fillRect(595,422,40,40); 
-                
-                g2d.setColor(grisPiso);
-                g2d.fillRect(534,467,115,20); 
-
-                
-                //piso
-                g2d.setColor(grisPiso);
-                g2d.fillRect(250, 570,500,50);
-                
-                g2d.setColor(verdeOscuro);
-                g2d.fillRect(0, 620,1000,15);
-
-                g2d.setColor(verdePasto);
-                g2d.fillRect(0, 635,1000,50);                
-                g2d.setColor(tierraClara);
-                g2d.fillRect(0, 685,1000,30);           
-           }
-       
-        };
-        pane.setBackground(azulCielo);
-        pane.setSize(1000,750);
-        pane.setLocation(0,0);
-        this.add(pane);
-    }
+	
 	
 	
 	public void login() {
@@ -289,7 +147,54 @@ public class Ventana extends JFrame implements ActionListener {
 		acceder.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		contenedor.add(acceder);
-		acceder.addActionListener(this);
+		acceder.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int contar=0;
+				String username_val = username.getText();
+				char[] psw_val = psw.getPassword();
+				
+				if(username_val.equals("")) {
+					System.out.println("Error");
+					JOptionPane.showMessageDialog(contenedor, "Error al iniciar sesion, verifique sus datos");
+					username.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+					
+				}else {username.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
+				contar++;
+				}
+				
+				if(psw_val.length<=5) {
+						System.out.println("Error");
+						psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+				}else { 
+					int iterador=0;
+					for(int i=0;i<psw_val.length;i++) {
+						if(psw_val[i]==' ') {
+							iterador++;
+						}
+					}
+					if(iterador<=0) {
+						psw.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
+						contar++;
+					}else {
+						psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+						System.out.println("Tu contraseña no debe contener espacios.");
+					}
+						
+					
+				}
+				
+				if(contar==2) {
+					JOptionPane.showMessageDialog(contenedor, "Éxito al iniciar sesión...");
+					contar=0;
+				}
+			}
+
+		});
+		
+		
+		
 		acceder.addMouseListener(new java.awt.event.MouseAdapter() {
 
 		    @Override
@@ -743,7 +648,148 @@ public class Ventana extends JFrame implements ActionListener {
 		this.repaint();
 	}
 	
-	
+	public void pintar() {
+		Color cremaPared = new Color(245, 212, 114);
+		Color sombraCrema = new Color(201, 161, 74);
+		Color cafePuerta = new Color(133, 102, 33);
+		Color cafeOscuro = new Color(92, 70, 23);
+		Color blanco = new Color(245, 245, 245);
+		Color grisPiso = new Color(102, 102, 102);
+		Color grisOscuro = new Color(70,70,70);
+		Color azulCielo = new Color(0, 191, 255);
+		Color maderaValla = new Color(255, 184, 77);
+		Color atrasValla = new Color(211, 151, 64);
+		Color verdeOscuro = new Color(51, 77, 0);
+		Color verdePasto = new Color(119, 153, 51);
+		Color tierraClara = new Color(204, 187, 102);
+		
+		JPanel pane = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D)g;     
+                
+                g2d.setStroke(new BasicStroke(2));
+                
+                //g2d.drawLine(0, 0, 100, 100);
+                //g2d.drawLine(200, 200, 500, 200);
+                //g2d.drawRect(250,200,100,100 );
+                //g2d.drawOval(250,100,70,50);
+                //g2d.drawArc(320,145,90,50,0,180);}
+                
+                
+                //valla      
+                g2d.setColor(atrasValla);
+                g2d.fillRect(0, 490,1000,80);
+                
+                g2d.setColor(maderaValla);               
+                g2d.fillPolygon(new int []{0, 0, 35, 70, 70}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{93, 93, 128, 163, 163}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{186, 186, 221, 256, 256}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{279, 279, 314, 349, 349}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{372, 372, 407, 442, 442}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{465, 465, 500, 535, 535}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{558, 558, 593, 628, 628}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{651, 651, 686, 721, 721}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{744, 744, 779, 814, 814}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{837, 837, 872, 907, 907}, new int [] {620, 350, 310, 350, 620}, 5);
+                g2d.fillPolygon(new int []{930, 930, 965, 1000, 1000}, new int [] {620, 350, 310, 350, 620}, 5);               
+                                                
+                //chimenea
+                g2d.setColor(grisPiso);
+                g2d.fillRect(600, 150,70,90);
+                g2d.fillRect(590, 120,90,40);
+                
+                g2d.setColor(grisOscuro);
+                g2d.fillPolygon(new int []{596,670,670},new int [] {160,160,170},3);
+                
+                //pared casa
+                g2d.setColor(cremaPared);
+                g2d.fillRect(325, 230,350,350);
+                
+                g2d.setColor(sombraCrema);
+                g2d.fillPolygon(new int []{325,675,675},new int [] {280,350,280},3);   
+                g2d.fillRect(645,470,30,20);
+                
+                g2d.setStroke(new BasicStroke(3));
+                g2d.setColor(cafePuerta);
+                g2d.drawLine(325, 300, 673, 300);
+                g2d.drawLine(325, 335, 673, 335);
+                g2d.drawLine(325, 370, 673, 370);
+                g2d.drawLine(325, 405, 673, 405);
+                g2d.drawLine(325, 440, 673, 440);
+                g2d.drawLine(325, 475, 673, 475);
+                g2d.drawLine(325, 510, 673, 510);
+                g2d.drawLine(325, 545, 673, 545);
+                g2d.drawLine(325, 580, 673, 580);
+                
+                //nubes 
+                g2d.setColor(blanco);
+                                                
+                g2d.fillArc(50,20,50,40,0,360);
+                g2d.fillArc(80,10,60,50,0,360);
+                g2d.fillArc(120,20,50,40,0,360);
+
+                g2d.fillArc(450,50,50,40,0,360);
+                g2d.fillArc(480,40,60,50,0,360);
+                g2d.fillArc(520,50,50,40,0,360);
+                
+                g2d.fillArc(800,30,50,40,0,360);
+                g2d.fillArc(830,20,60,50,0,360);
+                g2d.fillArc(870,30,50,40,0,360);
+                
+                
+                //Techo
+                g2d.setColor(rojoClaro);
+                g2d.fillPolygon(new int []{230,420,770},new int [] {280,90,280},3);                                                  
+                
+                //puerta
+                g2d.setColor(cafePuerta);
+                g2d.fillRect(370, 368,100,200);
+                
+                g2d.setStroke(new BasicStroke(5));
+                g2d.setColor(cafeOscuro);
+                g2d.drawRect(370,368,100,200 );
+                
+                g2d.setColor(blanco);
+                g2d.fillArc(440,460,15,15,0,360);
+                               
+                // ventana
+                g2d.setColor(sombraCrema);
+                g2d.fillPolygon(new int []{540,675,675},new int [] {485,485,508},3);
+                
+                g2d.setColor(rojoClaro);
+                g2d.fillRect(540,368,103,102 );
+                
+                g2d.setColor(blanco);
+                g2d.fillRect(548,376,40,40);  
+                g2d.fillRect(595,376,40,40);  
+                g2d.fillRect(548,422,40,40);  
+                g2d.fillRect(595,422,40,40); 
+                
+                g2d.setColor(grisPiso);
+                g2d.fillRect(534,467,115,20); 
+
+                
+                //piso
+                g2d.setColor(grisPiso);
+                g2d.fillRect(250, 570,500,50);
+                
+                g2d.setColor(verdeOscuro);
+                g2d.fillRect(0, 620,1000,15);
+
+                g2d.setColor(verdePasto);
+                g2d.fillRect(0, 635,1000,50);                
+                g2d.setColor(tierraClara);
+                g2d.fillRect(0, 685,1000,30);           
+           }
+       
+        };
+        pane.setBackground(azulCielo);
+        pane.setSize(1000,750);
+        pane.setLocation(0,0);
+        this.add(pane);
+    }
 	
 	
 	
@@ -793,7 +839,7 @@ public class Ventana extends JFrame implements ActionListener {
 	    timer.setRepeats(false);
 	    timer.start();
 	}
-	
+	/*
 	@Override
     public void actionPerformed(ActionEvent e) {
 
@@ -808,5 +854,13 @@ public class Ventana extends JFrame implements ActionListener {
         	this.revalidate();
         	
         }
-    }
+    }*/
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

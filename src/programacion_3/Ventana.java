@@ -67,9 +67,7 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setTitle("Estudiantes");
 		this.setLayout(null);
 		this.getContentPane().setBackground(verdeClaro);
-		menu();
-		registro();
-		
+		this.router("registro");
 		
 		this.repaint();
 		this.revalidate();
@@ -87,8 +85,8 @@ public class Ventana extends JFrame implements ActionListener {
 		contenedor.setLayout(null);
 		this.add(contenedor);
 		
-		Icono plantaa = new Icono("planta.jpg",1000,750);
-		plantaa.setLocation(0,0);
+		Icono plantaa = new Icono("planta.jpg",1000,700);
+		plantaa.setLocation(0,20);
 		plantaa.setOpaque(true);
 		this.add(plantaa);
 		
@@ -222,7 +220,12 @@ public class Ventana extends JFrame implements ActionListener {
 		registrarC.setContentAreaFilled(false);
 		registrarC.setBorderPainted(false);     
 		registrarC.setFocusPainted(false);
-		registrarC.addActionListener(this);
+		
+		registrarC.addActionListener(e ->{
+			this.router("registro");
+		});
+		
+		
 		registrarC.addMouseListener(new java.awt.event.MouseAdapter() {
 
 		    @Override
@@ -274,21 +277,26 @@ public class Ventana extends JFrame implements ActionListener {
 	
 	public void registro() {
 		//marco de registtro
+		
 				JPanel registro = new JPanel();
-				registro.setOpaque(true);
-				registro.setBackground(new Color(85,85,85));
-				registro.setSize(500,750);
-				registro.setLocation(500,0);		
+				registro.setOpaque(false);
+				registro.setBackground(verdeHover);
+				registro.setSize(500,700);
+				registro.setLocation(250,20);		
 				registro.setLayout(null);
 				this.add(registro);
+				Icono plantaa = new Icono("planta.jpg",1000,700);
+				plantaa.setLocation(0,20);
+				plantaa.setOpaque(true);
+				this.add(plantaa);
 				
 				JLabel r_title = new JLabel();
 				r_title.setText("REGISTRO");
-				r_title.setSize(200, 30);
-				r_title.setLocation(150, 80);
+				r_title.setSize(250, 30);
+				r_title.setLocation(125, 80);
 				r_title.setOpaque(false);
-				r_title.setForeground(Color.white);
-				r_title.setFont(new Font("Tahoma", Font.BOLD, 30));
+				r_title.setForeground(Color.black);
+				r_title.setFont(new Font("Times New Roman",Font.BOLD,40));
 				r_title.setHorizontalAlignment(JLabel.CENTER);
 				registro.add(r_title);
 				
@@ -299,7 +307,7 @@ public class Ventana extends JFrame implements ActionListener {
 				userlabel2.setOpaque(false);
 				userlabel2.setFont(new Font("Arial",Font.BOLD,16));
 				userlabel2.setHorizontalAlignment(JLabel.CENTER);
-				userlabel2.setForeground(Color.white);
+				userlabel2.setForeground(Color.black);
 				registro.add(userlabel2);
 				
 				//nombre de ussuario
@@ -316,7 +324,7 @@ public class Ventana extends JFrame implements ActionListener {
 				bio_text.setOpaque(false);
 				bio_text.setFont(new Font("Tahoma",Font.BOLD,16));
 				bio_text.setHorizontalAlignment(JLabel.CENTER);
-				bio_text.setForeground(Color.white);
+				bio_text.setForeground(Color.black);
 				bio_text.setHorizontalAlignment(JLabel.CENTER);
 				registro.add(bio_text);
 				
@@ -334,7 +342,7 @@ public class Ventana extends JFrame implements ActionListener {
 				preferencias.setLocation(150, 330);
 				preferencias.setOpaque(false);
 				preferencias.setFont(new Font("Tahoma", Font.BOLD, 16));
-				preferencias.setForeground(Color.yellow);
+				preferencias.setForeground(Color.black);
 				preferencias.setHorizontalAlignment(JLabel.CENTER);
 				registro.add(preferencias);
 				
@@ -358,8 +366,8 @@ public class Ventana extends JFrame implements ActionListener {
 				credito.setOpaque(false);
 				credito.setForeground(Color.black);
 				credito.setFont(new Font("Tahoma", Font.BOLD, 16));
-				fondo.add(credito);
-
+				fondo.add(credito);				
+				
 				JCheckBox inversiones = new JCheckBox("Inversiones");
 				inversiones.setSize(120, 30);
 				inversiones.setLocation(290, 355);
@@ -397,7 +405,7 @@ public class Ventana extends JFrame implements ActionListener {
 				registro.add(aceptar);
 				registro.add(rechazar);
 				
-				String[] ciudades = {"Selecciones su ciudad...", "La Paz", "Los Cabos", "Loreto" };
+				String[] ciudades = {"Seleccione su ciudad...", "La Paz", "Los Cabos", "Loreto" };
 				JComboBox ciudad = new JComboBox(ciudades);
 				ciudad.setBounds(100, 495, 300, 30);
 				ciudad.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -405,7 +413,7 @@ public class Ventana extends JFrame implements ActionListener {
 				registro.add(ciudad);
 				
 				JButton crearCuenta = new JButton("CREAR CUENTA");
-				crearCuenta.setBounds(150, 550, 200, 60);
+				crearCuenta.setBounds(150, 530, 200, 60);
 				crearCuenta.setBackground(new Color(10, 250, 20));
 				crearCuenta.setForeground(Color.BLACK);
 				crearCuenta.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -420,8 +428,8 @@ public class Ventana extends JFrame implements ActionListener {
 						String username_val2 = username2.getText();
 						if(username_val2.equals("")) {
 							System.out.println("Error");
-							JOptionPane.showMessageDialog(contenedor, "Error al registrarse, verifique sus datos");
 							username2.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+							JOptionPane.showMessageDialog(contenedor, "Error al registrarse, verifique sus datos");
 							
 						}else {username2.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
 						contador++;
@@ -436,14 +444,16 @@ public class Ventana extends JFrame implements ActionListener {
 						}
 						
 						if(debito.isSelected()==true||credito.isSelected()==true||inversiones.isSelected()==true) {
-							debito.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));
-							credito.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));
-							inversiones.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));
+							fondo.setBorder(BorderFactory.createLineBorder(verdeHover,2,true));
 						}else {
-							debito.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
-							credito.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
-							inversiones.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+							fondo.setBorder(BorderFactory.createLineBorder(rojoClaro,2,true));
 						} 
+						
+						if(ciudad.getSelectedItem().equals("Seleccione su ciudad...")) {
+							ciudad.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));							
+						}else {
+							ciudad.setBorder(BorderFactory.createLineBorder(verdeHover,2,true));
+						}
 						
 						
 						
@@ -468,10 +478,23 @@ public class Ventana extends JFrame implements ActionListener {
 				        }
 				    }
 				};
-
 				aceptar.addActionListener(accionRadio);
 				rechazar.addActionListener(accionRadio);
 				registro.add(crearCuenta);
+				
+				
+				JButton cancelar=new JButton("Cancelar");
+				cancelar.setBounds(160, 600, 180, 60);
+				cancelar.setBackground(rojoClaro);
+				cancelar.setForeground(Color.BLACK);
+				cancelar.setFont(new Font("Tahoma", Font.BOLD, 17));
+				cancelar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+				cancelar.setFocusable(false);
+				cancelar.addActionListener(e->{
+					this.router("login");	
+				});
+				registro.add(cancelar);
+
 				
 				registro.repaint();
 				registro.revalidate();
@@ -563,7 +586,25 @@ public class Ventana extends JFrame implements ActionListener {
 		menuItem = new JMenuItem("Desmarcar Favorito");
 		archivo.add(submenu);
 		submenu.add(menuItem);
-
+		
+		//menu cuenta/login/registro
+		JMenu cuenta = new JMenu("Cuenta");
+		barra.add(cuenta);
+		
+		JMenuItem  acceder=new JMenuItem("Acceder");
+		acceder.addActionListener(e ->{
+			this.router("login");
+		});
+		
+		
+		JMenuItem   registrarse=new JMenuItem("Registrarse");
+		registrarse.addActionListener(e ->{
+			this.router("registro");
+		});
+		
+		cuenta.add(acceder);
+		cuenta.add(registrarse);
+		
 		this.setJMenuBar(barra);
 		this.add(barra);
 	}
@@ -850,7 +891,20 @@ public class Ventana extends JFrame implements ActionListener {
         this.add(pane);
     }
 	
-	
+	public void router(String target) {
+		this.getContentPane().removeAll();
+		if(target.equals("registro")) {
+			this.registro();
+		}
+		
+		if(target.equals("login")) {
+			this.login();
+		}
+		
+		this.menu();
+		this.repaint();
+		this.revalidate();
+	}
 	
 	
 	//metodos para hacer que el botonm acceder sea interactivo

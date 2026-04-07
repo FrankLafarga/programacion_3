@@ -4,11 +4,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//Ventana principal = new Ventana();
+		Ventana principal = new Ventana();
 		
 		//VentanaCalculadora calc = new VentanaCalculadora();
 		
-		VentanaDibujos dibujos = new VentanaDibujos();
+		//VentanaDibujos dibujos = new VentanaDibujos();
 	}
 
 }

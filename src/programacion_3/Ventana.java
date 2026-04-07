@@ -67,7 +67,7 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setTitle("Estudiantes");
 		this.setLayout(null);
 		this.getContentPane().setBackground(verdeClaro);
-		this.router("registro");
+		this.router("login");
 		
 		this.repaint();
 		this.revalidate();
@@ -501,6 +501,205 @@ public class Ventana extends JFrame implements ActionListener {
 		
 	}
 	
+	public void recuperar() {
+		contenedor = new JPanel();
+		contenedor.setOpaque(false);
+		contenedor.setBackground(new Color(240,240,240));
+		contenedor.setSize(500,500);
+		contenedor.setLocation(250,100);		
+		contenedor.setLayout(null);
+		this.add(contenedor);
+		
+		Icono plantaa = new Icono("planta.jpg",1000,700);
+		plantaa.setLocation(0,20);
+		plantaa.setOpaque(true);
+		this.add(plantaa);
+		
+		//titulo de bienvenida		
+		JLabel title_login = new JLabel();
+		title_login.setText("BIENVENIDO");
+		title_login.setSize(500,50);
+		title_login.setLocation(0,40);
+		title_login.setOpaque(false);
+		title_login.setForeground(Color.black);
+		title_login.setFont(new Font("Times New Roman",Font.BOLD,60));
+		title_login.setHorizontalAlignment(JLabel.CENTER);
+		contenedor.add(title_login);
+		
+		JLabel userlabel = new JLabel();
+		userlabel.setText("Nombre de usuario:");
+		userlabel.setSize(200,30);
+		userlabel.setLocation(75,165);
+		userlabel.setOpaque(false);
+		userlabel.setFont(new Font("Arial",Font.ITALIC,16));
+		userlabel.setHorizontalAlignment(JLabel.CENTER);
+		userlabel.setForeground(Color.black);
+		contenedor.add(userlabel);
+		
+		//nombre de ussuario
+		JTextField username = new JTextField();
+		username.setSize(300,30);
+		username.setLocation(100,190);
+		username.setBackground(blancof);
+		username.setFont(new Font("Arial",Font.BOLD,20));
+		contenedor.add(username);
+		
+		
+		JLabel pswlabel = new JLabel();
+		pswlabel.setText("Contraseña:");
+		pswlabel.setSize(200,30);
+		pswlabel.setLocation(45,235);
+		pswlabel.setOpaque(false);
+		pswlabel.setFont(new Font("Arial",Font.ITALIC,16));
+		pswlabel.setHorizontalAlignment(JLabel.CENTER);
+		pswlabel.setForeground(Color.black);
+		contenedor.add(pswlabel);
+		
+		JPasswordField psw = new JPasswordField();
+		psw.setSize(300,30);
+		psw.setLocation(100,260);
+		psw.setBackground(blancof);
+		psw.setFont(new Font("",Font.BOLD,20));
+		contenedor.add(psw);
+		
+		acceder = new JButton();
+		acceder.setText("Acceder");
+		acceder.setLocation(155,370);
+		acceder.setSize(190,50);
+		acceder.setBackground(verde);
+		acceder.setFont(new Font("Tahoma", Font.ITALIC, 20));
+		acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		contenedor.add(acceder);
+		acceder.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int contar=0;
+				String username_val = username.getText();
+				char[] psw_val = psw.getPassword();
+				
+				if(username_val.equals("")) {
+					System.out.println("Error");
+					JOptionPane.showMessageDialog(contenedor, "Error al iniciar sesion, verifique sus datos");
+					username.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+					
+				}else {username.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
+				contar++;
+				}
+				
+				if(psw_val.length<=5) {
+						System.out.println("Error");
+						psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+				}else { 
+					int iterador=0;
+					for(int i=0;i<psw_val.length;i++) {
+						if(psw_val[i]==' ') {
+							iterador++;
+						}
+					}
+					if(iterador<=0) {
+						psw.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
+						contar++;
+					}else {
+						psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+						System.out.println("Tu contraseña no debe contener espacios.");
+					}
+						
+					
+				}
+				
+				if(contar==2) {
+					JOptionPane.showMessageDialog(contenedor, "Éxito al iniciar sesión...");
+					contar=0;
+				}
+			}
+
+		});
+		
+		
+		
+		acceder.addMouseListener(new java.awt.event.MouseAdapter() {
+
+		    @Override
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		        acceder.setBackground(verdeHover);
+		        acceder.setForeground(Color.WHITE); 
+		        acceder.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+		    }
+
+		    @Override
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		        acceder.setBackground(verde);
+		        acceder.setForeground(Color.BLACK);
+		        acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		    }
+		});
+		    
+		registrarC = new JButton();
+		registrarC.setText("No tengo una cuenta...");
+		registrarC.setLocation(145,478);
+		registrarC.setSize(210,20);
+		registrarC.setOpaque(false);
+		registrarC.setForeground(Color.black);
+		registrarC.setFont(new Font("Tahoma", Font.ITALIC, 17));
+		registrarC.setContentAreaFilled(false);
+		registrarC.setBorderPainted(false);     
+		registrarC.setFocusPainted(false);
+		
+		registrarC.addActionListener(e ->{
+			this.router("registro");
+		});
+		
+		
+		registrarC.addMouseListener(new java.awt.event.MouseAdapter() {
+
+		    @Override
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		        registrarC.setForeground(Color.blue); 
+		    }
+
+		    @Override
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	registrarC.setForeground(Color.black);
+		    }
+		});
+		contenedor.add(registrarC);
+	
+		JLabel recuperar = new JLabel();
+		recuperar.setText("Recuperar contraseña");
+		recuperar.setSize(200,30);
+		recuperar.setLocation(230,290);
+		recuperar.setOpaque(false);
+		recuperar.setFont(new Font("Arial",Font.ITALIC,13));
+		recuperar.setHorizontalAlignment(JLabel.CENTER);
+		recuperar.setForeground(Color.blue);
+		contenedor.add(recuperar);
+		
+		JCheckBox recordar = new JCheckBox();
+		recordar.setSize(120,30);
+		recordar.setLocation(96,290);
+		recordar.setOpaque(false);
+		recordar.setText("Recordarme");
+		recordar.setFont(new Font("Arial",Font.ITALIC,13));
+		contenedor.add(recordar);
+		
+		
+		//iconos
+		Icono iconoUsuario = new Icono("usuarioVerde.png",35,35);
+		iconoUsuario.setLocation(62,187);
+		iconoUsuario.setOpaque(true);
+		contenedor.add(iconoUsuario);
+		
+		Icono iconoCandado = new Icono("candadoVerde.png",35,35);
+		iconoCandado.setLocation(62,254);
+		iconoCandado.setOpaque(true);
+		contenedor.add(iconoCandado);
+		
+		contenedor.repaint();
+		contenedor.revalidate();
+		
+	}
+	
 	public void users() {
 		JPanel users= new JPanel();
 		users.setSize(900,500);
@@ -596,14 +795,62 @@ public class Ventana extends JFrame implements ActionListener {
 			this.router("login");
 		});
 		
-		
 		JMenuItem   registrarse=new JMenuItem("Registrarse");
 		registrarse.addActionListener(e ->{
 			this.router("registro");
 		});
 		
+		JMenuItem   recuperar_cuenta=new JMenuItem("Recuperar cuenta");
+		recuperar_cuenta.addActionListener(e ->{
+			this.router("recuperar");
+		});
 		cuenta.add(acceder);
 		cuenta.add(registrarse);
+		cuenta.add(recuperar_cuenta);	
+		
+		//menu usuarios:
+		JMenu users = new JMenu("Usuarios");
+		barra.add(users);
+		
+		JMenuItem  alta=new JMenuItem("Alta");
+		alta.addActionListener(e ->{
+			this.router("alta_usuario");
+		});
+		users.add(alta);
+		
+		JMenuItem  baja=new JMenuItem("Baja");
+		baja.addActionListener(e ->{
+			this.router("baja_usuario");
+		});
+		users.add(baja);
+		
+		JMenuItem  consultar=new JMenuItem("Consultar");
+		consultar.addActionListener(e ->{
+			this.router("consultar_usuario");
+		});
+		users.add(consultar);
+		
+		//menu ayuda:
+		JMenu ayuda = new JMenu("Ayuda");
+		barra.add(ayuda);
+		
+		JMenuItem  como_crear=new JMenuItem("¿Cómo crear un usuario");
+		como_crear.addActionListener(e ->{
+			this.router("como_crear");
+		});
+		ayuda.add(como_crear);
+		
+		JMenuItem  como_acceder=new JMenuItem("¿Cómo acceder al sistema?");
+		como_acceder.addActionListener(e ->{
+			this.router("como_acceder");
+		});
+		ayuda.add(como_acceder);
+		
+		JMenuItem  como_recuperar=new JMenuItem("¿Cómo recuperar mi contraseña?");
+		como_recuperar.addActionListener(e ->{
+			this.router("como_recuperar");
+		});
+		ayuda.add(como_recuperar); 
 		
 		this.setJMenuBar(barra);
 		this.add(barra);
@@ -758,12 +1005,125 @@ public class Ventana extends JFrame implements ActionListener {
 			this.login();
 		}
 		
+		if(target.equals("recuperar")) {
+			this.recuperar();
+		}
+		
+		if(target.equals("alta_usuario")) {
+			this.alta_usuario();
+		}
+		
+		if(target.equals("baja_usuario")) {
+			this.baja_usuario();
+		}
+		
+		if(target.equals("consultar_usuario")) {
+			this.consultar_usuario();
+		}
+		
+		if(target.equals("como_crear")) {
+			this.como_crear();
+		}
+		
+		if(target.equals("como_acceder")) {
+			this.como_acceder();
+		}
+		
+		if(target.equals("como_recuperar")) {
+			this.como_recuperar();
+		}
+		
+		
 		this.menu();
 		this.repaint();
 		this.revalidate();
 	}
 	
+	//menu de usuario
+	public void alta_usuario() {
+		JPanel panelAlta = new JPanel();
+		panelAlta.setOpaque(false);
+		panelAlta.setBackground(new Color(240,240,240));
+		panelAlta.setSize(500,500);
+		panelAlta.setLocation(250,100);		
+		panelAlta.setLayout(null);
+		panelAlta.setLayout(new BorderLayout());
+		JLabel alta = new JLabel("Alta  de usuario");
+		alta.setFont(new Font("Times New Roman",Font.BOLD,60));
+		panelAlta.add(alta, BorderLayout.CENTER);
+		this.add(panelAlta);
+	}
+	public void baja_usuario() {
+		JPanel panelAlta = new JPanel();
+		panelAlta.setOpaque(false);
+		panelAlta.setBackground(new Color(240,240,240));
+		panelAlta.setSize(500,500);
+		panelAlta.setLocation(250,100);		
+		panelAlta.setLayout(null);
+		panelAlta.setLayout(new BorderLayout());
+		JLabel alta = new JLabel("Baja  de usuario");
+		alta.setFont(new Font("Times New Roman",Font.BOLD,60));
+		panelAlta.add(alta, BorderLayout.CENTER);
+		this.add(panelAlta);
+	}
+	public void consultar_usuario() {
+		JPanel panelAlta = new JPanel();
+		panelAlta.setOpaque(false);
+		panelAlta.setBackground(new Color(240,240,240));
+		panelAlta.setSize(500,500);
+		panelAlta.setLocation(250,100);		
+		panelAlta.setLayout(null);
+		panelAlta.setLayout(new BorderLayout());
+		JLabel alta = new JLabel("consulta de usuario");
+		alta.setFont(new Font("Times New Roman",Font.BOLD,60));
+		panelAlta.add(alta, BorderLayout.CENTER);
+		this.add(panelAlta);
+	}
 	
+	//menu de ayuda
+	public void como_crear() {
+		JPanel panelAlta = new JPanel();
+		panelAlta.setOpaque(false);
+		panelAlta.setBackground(new Color(240,240,240));
+		panelAlta.setSize(500,500);
+		panelAlta.setLocation(250,100);		
+		panelAlta.setLayout(null);
+		panelAlta.setLayout(new BorderLayout());
+		JLabel alta = new JLabel("¿Cómo crear un usuario?");
+		alta.setFont(new Font("Times New Roman",Font.BOLD,40));
+		panelAlta.add(alta, BorderLayout.CENTER);
+		this.add(panelAlta);
+	}
+	public void como_acceder() {
+		JPanel panelAlta = new JPanel();
+		panelAlta.setOpaque(false);
+		panelAlta.setBackground(new Color(240,240,240));
+		panelAlta.setSize(500,500);
+		panelAlta.setLocation(250,100);		
+		panelAlta.setLayout(null);
+		panelAlta.setLayout(new BorderLayout());
+		JLabel alta = new JLabel("¿Cómo acceder al sistema?");
+		alta.setFont(new Font("Times New Roman",Font.BOLD,40));
+		panelAlta.add(alta, BorderLayout.CENTER);
+		this.add(panelAlta);
+	}
+	
+	public void como_recuperar() {
+		JPanel panelAlta = new JPanel();
+		panelAlta.setOpaque(false);
+		panelAlta.setBackground(new Color(240,240,240));
+		panelAlta.setSize(500,500);
+		panelAlta.setLocation(250,100);		
+		panelAlta.setLayout(null);
+		panelAlta.setLayout(new BorderLayout());
+		JLabel alta = new JLabel("¿Cómo recuperar mi contraseña?");
+		alta.setFont(new Font("Times New Roman",Font.BOLD,40));
+		panelAlta.add(alta, BorderLayout.CENTER);
+		this.add(panelAlta);
+	}
+	
+	
+
 	//metodos para hacer que el botonm acceder sea interactivo
 	public void mostrarCargando() {
 

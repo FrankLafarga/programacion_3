@@ -35,6 +35,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.*;
+import java.awt.*;
 
 public class Ventana extends JFrame implements ActionListener {
 	Color verde=new Color(140,180,140);
@@ -50,11 +53,13 @@ public class Ventana extends JFrame implements ActionListener {
 	Color gris = new Color(200,200,200);
 	Color azulMar = new Color(0, 123, 255);
 	Color azulO = new Color(0,70,120);
-	
-	String titulo="Hola...";
+	Font fuenteLabel = new Font("Segoe UI", Font.PLAIN, 20);
+	Font fuenteCampo = new Font("Segoe UI", Font.PLAIN, 18);
+	private int pantalla=0;
+	private String direccion="login";
 	private JPanel contenedor;
 	private JPanel cargando;
-	private JButton acceder,registrarC;
+	private JButton acceder,registrarC,volver;
 	
 	public Ventana() {
 		
@@ -62,7 +67,7 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setSize(1000,750);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setMinimumSize(new Dimension(300,300));
+		this.setMinimumSize(new Dimension(450,450));
 		this.setMaximumSize(new Dimension(1050,770));
 		this.setTitle("Estudiantes");
 		this.setLayout(null);
@@ -76,7 +81,7 @@ public class Ventana extends JFrame implements ActionListener {
 	
 	
 	public void login() {
-		titulo="INICIO DE SESIÓN";
+		pantalla=1;
 		contenedor = new JPanel();
 		contenedor.setOpaque(false);
 		contenedor.setBackground(new Color(240,240,240));
@@ -145,50 +150,46 @@ public class Ventana extends JFrame implements ActionListener {
 		acceder.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		contenedor.add(acceder);
-		acceder.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int contar=0;
-				String username_val = username.getText();
-				char[] psw_val = psw.getPassword();
+		acceder.addActionListener(e-> {
+			int contar=0;
+			String username_val = username.getText();
+			char[] psw_val = psw.getPassword();
+			
+			if(username_val.equals("")) {
+				System.out.println("Error");
+				JOptionPane.showMessageDialog(contenedor, "Error al iniciar sesion, verifique sus datos");
+				username.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
 				
-				if(username_val.equals("")) {
-					System.out.println("Error");
-					JOptionPane.showMessageDialog(contenedor, "Error al iniciar sesion, verifique sus datos");
-					username.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
-					
-				}else {username.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
-				contar++;
-				}
-				
-				if(psw_val.length<=5) {
-						System.out.println("Error");
-						psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
-				}else { 
-					int iterador=0;
-					for(int i=0;i<psw_val.length;i++) {
-						if(psw_val[i]==' ') {
-							iterador++;
-						}
-					}
-					if(iterador<=0) {
-						psw.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
-						contar++;
-					}else {
-						psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
-						System.out.println("Tu contraseña no debe contener espacios.");
-					}
-						
-					
-				}
-				
-				if(contar==2) {
-					JOptionPane.showMessageDialog(contenedor, "Éxito al iniciar sesión...");
-					contar=0;
-				}
+			}else {username.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
+			contar++;
 			}
-
+			
+			if(psw_val.length<=5) {
+					System.out.println("Error");
+					psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+			}else { 
+				int iterador=0;
+				for(int i=0;i<psw_val.length;i++) {
+					if(psw_val[i]==' ') {
+						iterador++;
+					}
+				}
+				if(iterador<=0) {
+					psw.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
+					contar++;
+				}else {
+					psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
+					System.out.println("Tu contraseña no debe contener espacios.");
+				}
+					
+				
+			}
+			
+			if(contar==2) {
+				JOptionPane.showMessageDialog(contenedor, "Éxito al iniciar sesión...");
+				contar=0;
+				this.router("users");
+			}
 		});
 		
 		
@@ -277,7 +278,8 @@ public class Ventana extends JFrame implements ActionListener {
 	
 	public void registro() {
 		//marco de registtro
-		
+				direccion="login";
+				pantalla=1;
 				JPanel registro = new JPanel();
 				registro.setOpaque(false);
 				registro.setBackground(verdeHover);
@@ -701,6 +703,7 @@ public class Ventana extends JFrame implements ActionListener {
 	}
 	
 	public void users() {
+		direccion="login";
 		JPanel users= new JPanel();
 		users.setSize(900,500);
 		users.setLocation(45,100);
@@ -723,6 +726,9 @@ public class Ventana extends JFrame implements ActionListener {
 		JButton add = new JButton("Añadir");
 		add.setBounds(140,90,100,40);
 		add.setFont(new Font("Tahoma", Font.BOLD, 13));
+		add.addActionListener(e->{
+			this.router("alta_usuario");
+		});
 		users.add(add);
 		
 		Object[] table_head = {"No. control", "Nombre", "Apellidos", "Semestre", "Promedio", "Acciones"};
@@ -765,6 +771,19 @@ public class Ventana extends JFrame implements ActionListener {
 	}
 	
 	public void menu() {
+		volver = new JButton();
+		volver.setText("Volver");
+		volver.setLocation(10,30);
+		volver.setSize(100,30);
+		volver.setBackground(verde);
+		volver.setFont(new Font("Tahoma", Font.ITALIC, 20));
+		volver.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		volver.addActionListener(e->{
+			this.router(direccion);
+		});
+		if(pantalla!=1) {
+			this.add(volver);
+		}
 		JMenuBar barra = new JMenuBar();
 		JMenu archivo = new JMenu("Archivo");
 		barra.add(archivo);
@@ -780,7 +799,7 @@ public class Ventana extends JFrame implements ActionListener {
 
 		JMenu submenu=new JMenu("Otros");
 		archivo.addSeparator();
-		JMenuItem menuItem = new JMenuItem(titulo);
+		JMenuItem menuItem = new JMenuItem("marcar favorito");
 		submenu.add(menuItem);
 		menuItem = new JMenuItem("Desmarcar Favorito");
 		archivo.add(submenu);
@@ -804,6 +823,7 @@ public class Ventana extends JFrame implements ActionListener {
 		recuperar_cuenta.addActionListener(e ->{
 			this.router("recuperar");
 		});
+		
 		cuenta.add(acceder);
 		cuenta.add(registrarse);
 		cuenta.add(recuperar_cuenta);	
@@ -997,6 +1017,7 @@ public class Ventana extends JFrame implements ActionListener {
 	
 	public void router(String target) {
 		this.getContentPane().removeAll();
+		pantalla=0;
 		if(target.equals("registro")) {
 			this.registro();
 		}
@@ -1006,7 +1027,15 @@ public class Ventana extends JFrame implements ActionListener {
 		}
 		
 		if(target.equals("recuperar")) {
-			this.recuperar();
+			this.registro();
+		}
+		
+		if(target.equals("users")) {
+			this.users();
+		}
+		
+		if(target.equals("intereses")){
+			this.calcular_intereses();
 		}
 		
 		if(target.equals("alta_usuario")) {
@@ -1018,7 +1047,7 @@ public class Ventana extends JFrame implements ActionListener {
 		}
 		
 		if(target.equals("consultar_usuario")) {
-			this.consultar_usuario();
+			this.users();
 		}
 		
 		if(target.equals("como_crear")) {
@@ -1041,18 +1070,73 @@ public class Ventana extends JFrame implements ActionListener {
 	
 	//menu de usuario
 	public void alta_usuario() {
-		JPanel panelAlta = new JPanel();
-		panelAlta.setOpaque(false);
-		panelAlta.setBackground(new Color(240,240,240));
-		panelAlta.setSize(500,500);
-		panelAlta.setLocation(250,100);		
-		panelAlta.setLayout(null);
-		panelAlta.setLayout(new BorderLayout());
-		JLabel alta = new JLabel("Alta  de usuario");
-		alta.setFont(new Font("Times New Roman",Font.BOLD,60));
-		panelAlta.add(alta, BorderLayout.CENTER);
-		this.add(panelAlta);
+	    direccion = "users";
+	    JPanel panelAlta = new JPanel();
+	    panelAlta.setOpaque(false);
+	    panelAlta.setBackground(new Color(240, 240, 240));
+	    panelAlta.setSize(500, 500);
+	    panelAlta.setLocation(250, 100);
+	    panelAlta.setLayout(new BorderLayout());
+	    
+	    JLabel alta = new JLabel("Alta de usuario");
+	    alta.setHorizontalAlignment(JLabel.CENTER);
+	    alta.setFont(new Font("Times New Roman", Font.BOLD, 40));
+	    alta.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); 
+	    panelAlta.add(alta, BorderLayout.NORTH);
+	    
+	    JPanel centro = new JPanel();
+	    centro.setBackground(new Color(240, 240, 240));
+	    centro.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
+	    centro.setLayout(new GridLayout(5, 2, 10, 10));
+	    centro.setBorder(BorderFactory.createCompoundBorder(
+	            centro.getBorder(), 
+	            BorderFactory.createEmptyBorder(20, 20, 20, 20)));
+	    JLabel lblControl = new JLabel("No. control: ");
+	    lblControl.setFont(fuenteLabel);
+	    JTextField txtControl = new JTextField();
+	    txtControl.setFont(fuenteCampo);
+	    centro.add(lblControl);
+	    centro.add(txtControl);
+
+	    JLabel lblNombre = new JLabel("Nombre: ");
+	    lblNombre.setFont(fuenteLabel);
+	    JTextField txtNombre = new JTextField();
+	    txtNombre.setFont(fuenteCampo);
+	    centro.add(lblNombre);
+	    centro.add(txtNombre);
+
+	    JLabel lblApellidos = new JLabel("Apellidos: ");
+	    lblApellidos.setFont(fuenteLabel);
+	    JTextField txtApellidos = new JTextField();
+	    txtApellidos.setFont(fuenteCampo);
+	    centro.add(lblApellidos);
+	    centro.add(txtApellidos);
+
+	    JLabel lblSemestre = new JLabel("Semestre: ");
+	    lblSemestre.setFont(fuenteLabel);
+	    JTextField txtSemestre = new JTextField();
+	    txtSemestre.setFont(fuenteCampo);
+	    centro.add(lblSemestre);
+	    centro.add(txtSemestre);
+
+	    JLabel lblPromedio = new JLabel("Promedio: ");
+	    lblPromedio.setFont(fuenteLabel);
+	    JTextField txtPromedio = new JTextField();
+	    txtPromedio.setFont(fuenteCampo);
+	    centro.add(lblPromedio);
+	    centro.add(txtPromedio);
+	    
+	    JButton botonGuardar = new JButton("Guardar");
+		botonGuardar.setBackground(new Color(240, 240, 240));
+		Icono guardar = new Icono("iconoGuardado.png", 25,30);
+		botonGuardar.add(guardar);
+		panelAlta.add(botonGuardar, BorderLayout.SOUTH);
+		
+	    panelAlta.add(centro, BorderLayout.CENTER);
+	    this.add(panelAlta);
 	}
+	
+	
 	public void baja_usuario() {
 		JPanel panelAlta = new JPanel();
 		panelAlta.setOpaque(false);
@@ -1066,22 +1150,10 @@ public class Ventana extends JFrame implements ActionListener {
 		panelAlta.add(alta, BorderLayout.CENTER);
 		this.add(panelAlta);
 	}
-	public void consultar_usuario() {
-		JPanel panelAlta = new JPanel();
-		panelAlta.setOpaque(false);
-		panelAlta.setBackground(new Color(240,240,240));
-		panelAlta.setSize(500,500);
-		panelAlta.setLocation(250,100);		
-		panelAlta.setLayout(null);
-		panelAlta.setLayout(new BorderLayout());
-		JLabel alta = new JLabel("consulta de usuario");
-		alta.setFont(new Font("Times New Roman",Font.BOLD,60));
-		panelAlta.add(alta, BorderLayout.CENTER);
-		this.add(panelAlta);
-	}
 	
 	//menu de ayuda
 	public void como_crear() {
+		direccion="registro";
 		JPanel panelAlta = new JPanel();
 		panelAlta.setOpaque(false);
 		panelAlta.setBackground(new Color(240,240,240));
@@ -1089,9 +1161,16 @@ public class Ventana extends JFrame implements ActionListener {
 		panelAlta.setLocation(250,100);		
 		panelAlta.setLayout(null);
 		panelAlta.setLayout(new BorderLayout());
-		JLabel alta = new JLabel("¿Cómo crear un usuario?");
+		JLabel alta = new JLabel("  ¿Cómo crear un usuario?");
 		alta.setFont(new Font("Times New Roman",Font.BOLD,40));
-		panelAlta.add(alta, BorderLayout.CENTER);
+		panelAlta.add(alta, BorderLayout.NORTH);
+		
+		JTextArea explicacion= new JTextArea("Para crear una cuenta solo ingresa al apartado\nregistrarse presionando el boton *no tengo una cuenta* en la parte inferior\nde la pantalla de bienvenida");
+		explicacion.setFont(new Font("Segoe UI",Font.PLAIN,20));
+		explicacion.setBorder(new LineBorder(new Color(0, 0, 0)));
+		explicacion.setEditable(false);
+		panelAlta.add(explicacion, BorderLayout.CENTER);
+		
 		this.add(panelAlta);
 	}
 	public void como_acceder() {
@@ -1102,9 +1181,15 @@ public class Ventana extends JFrame implements ActionListener {
 		panelAlta.setLocation(250,100);		
 		panelAlta.setLayout(null);
 		panelAlta.setLayout(new BorderLayout());
-		JLabel alta = new JLabel("¿Cómo acceder al sistema?");
+		JLabel alta = new JLabel(" ¿Cómo acceder al sistema?");
 		alta.setFont(new Font("Times New Roman",Font.BOLD,40));
-		panelAlta.add(alta, BorderLayout.CENTER);
+		panelAlta.add(alta, BorderLayout.NORTH);
+		
+		JTextArea explicacion= new JTextArea("Para acceder a nuestro sistema es necesario ingresar\ntu nombre de usuario y contraseña en caso de que\nya hayas hecho tu registro antes.");
+		explicacion.setFont(new Font("Segoe UI",Font.PLAIN,20));
+		explicacion.setBorder(new LineBorder(new Color(0, 0, 0)));
+		explicacion.setEditable(false);
+		panelAlta.add(explicacion, BorderLayout.CENTER);
 		this.add(panelAlta);
 	}
 	
@@ -1116,9 +1201,15 @@ public class Ventana extends JFrame implements ActionListener {
 		panelAlta.setLocation(250,100);		
 		panelAlta.setLayout(null);
 		panelAlta.setLayout(new BorderLayout());
-		JLabel alta = new JLabel("¿Cómo recuperar mi contraseña?");
-		alta.setFont(new Font("Times New Roman",Font.BOLD,40));
-		panelAlta.add(alta, BorderLayout.CENTER);
+		JLabel alta = new JLabel(" ¿Cómo recuperar mi contraseña?");
+		alta.setFont(new Font("Times New Roman",Font.BOLD,32));
+		panelAlta.add(alta, BorderLayout.NORTH);
+		
+		JTextArea explicacion= new JTextArea("Para recuperar tu cuenta en nuestro sistema\nes necesario que solicites una recuperación\nal departamento de sistemas a través del correo:\nrecuperar@gmail.com");
+		explicacion.setFont(new Font("Segoe UI",Font.PLAIN,20));
+		explicacion.setBorder(new LineBorder(new Color(0, 0, 0)));
+		explicacion.setEditable(false);
+		panelAlta.add(explicacion, BorderLayout.CENTER);
 		this.add(panelAlta);
 	}
 	

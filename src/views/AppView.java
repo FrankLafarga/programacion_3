@@ -1,4 +1,4 @@
-package programacion_3;
+package views;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,10 +36,13 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+import programacion_3.Icono;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Ventana extends JFrame implements ActionListener {
+public class AppView extends JFrame implements ActionListener {
 	Color verde=new Color(140,180,140);
 	Color verdeO=new Color(30,100,70);
 	Color verdeHoja=new Color(200,250,200);
@@ -61,7 +64,7 @@ public class Ventana extends JFrame implements ActionListener {
 	private JPanel cargando;
 	private JButton acceder,registrarC,volver;
 	
-	public Ventana() {
+	public AppView() {
 		
 		this.setVisible(true);
 		this.setSize(1000,750);
@@ -72,7 +75,7 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setTitle("Estudiantes");
 		this.setLayout(null);
 		this.getContentPane().setBackground(verdeClaro);
-		this.router("login");
+		this.router("users");
 		
 		this.repaint();
 		this.revalidate();
@@ -80,214 +83,6 @@ public class Ventana extends JFrame implements ActionListener {
 	
 	
 	
-	public void login() {
-		this.setVisible(true);
-		this.setSize(1000,750);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setMinimumSize(new Dimension(450,450));
-		this.setMaximumSize(new Dimension(1050,770));
-		this.setTitle("Estudiantes");
-		this.setLayout(null);
-		this.getContentPane().setBackground(verdeClaro);
-		this.router("login");
-		
-		this.repaint();
-		this.revalidate();
-		pantalla=1;
-		contenedor = new JPanel();
-		contenedor.setOpaque(false);
-		contenedor.setBackground(new Color(240,240,240));
-		contenedor.setSize(500,500);
-		contenedor.setLocation(250,100);		
-		contenedor.setLayout(null);
-		this.add(contenedor);
-		
-		Icono plantaa = new Icono("planta.jpg",1000,700);
-		plantaa.setLocation(0,20);
-		plantaa.setOpaque(true);
-		this.add(plantaa);
-		
-		//titulo de bienvenida		
-		JLabel title_login = new JLabel();
-		title_login.setText("BIENVENIDO");
-		title_login.setSize(500,50);
-		title_login.setLocation(0,40);
-		title_login.setOpaque(false);
-		title_login.setForeground(Color.black);
-		title_login.setFont(new Font("Times New Roman",Font.BOLD,60));
-		title_login.setHorizontalAlignment(JLabel.CENTER);
-		contenedor.add(title_login);
-		
-		JLabel userlabel = new JLabel();
-		userlabel.setText("Nombre de usuario:");
-		userlabel.setSize(200,30);
-		userlabel.setLocation(75,165);
-		userlabel.setOpaque(false);
-		userlabel.setFont(new Font("Arial",Font.ITALIC,16));
-		userlabel.setHorizontalAlignment(JLabel.CENTER);
-		userlabel.setForeground(Color.black);
-		contenedor.add(userlabel);
-		
-		//nombre de ussuario
-		JTextField username = new JTextField();
-		username.setSize(300,30);
-		username.setLocation(100,190);
-		username.setBackground(blancof);
-		username.setFont(new Font("Arial",Font.BOLD,20));
-		contenedor.add(username);
-		
-		
-		JLabel pswlabel = new JLabel();
-		pswlabel.setText("Contraseña:");
-		pswlabel.setSize(200,30);
-		pswlabel.setLocation(45,235);
-		pswlabel.setOpaque(false);
-		pswlabel.setFont(new Font("Arial",Font.ITALIC,16));
-		pswlabel.setHorizontalAlignment(JLabel.CENTER);
-		pswlabel.setForeground(Color.black);
-		contenedor.add(pswlabel);
-		
-		JPasswordField psw = new JPasswordField();
-		psw.setSize(300,30);
-		psw.setLocation(100,260);
-		psw.setBackground(blancof);
-		psw.setFont(new Font("",Font.BOLD,20));
-		contenedor.add(psw);
-		
-		acceder = new JButton();
-		acceder.setText("Acceder");
-		acceder.setLocation(155,370);
-		acceder.setSize(190,50);
-		acceder.setBackground(verde);
-		acceder.setFont(new Font("Tahoma", Font.ITALIC, 20));
-		acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		contenedor.add(acceder);
-		acceder.addActionListener(e-> {
-			int contar=0;
-			String username_val = username.getText();
-			char[] psw_val = psw.getPassword();
-			
-			if(username_val.equals("")) {
-				System.out.println("Error");
-				JOptionPane.showMessageDialog(contenedor, "Error al iniciar sesion, verifique sus datos");
-				username.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
-				
-			}else {username.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
-			contar++;
-			}
-			
-			if(psw_val.length<=5) {
-					System.out.println("Error");
-					psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
-			}else { 
-				int iterador=0;
-				for(int i=0;i<psw_val.length;i++) {
-					if(psw_val[i]==' ') {
-						iterador++;
-					}
-				}
-				if(iterador<=0) {
-					psw.setBorder(BorderFactory.createLineBorder(verdeHover,3,true));	
-					contar++;
-				}else {
-					psw.setBorder(BorderFactory.createLineBorder(rojoClaro,3,true));
-					System.out.println("Tu contraseña no debe contener espacios.");
-				}
-					
-				
-			}
-			
-			if(contar==2) {
-				JOptionPane.showMessageDialog(contenedor, "Éxito al iniciar sesión...");
-				contar=0;
-				this.router("users");
-			}
-		});
-		
-		
-		
-		acceder.addMouseListener(new java.awt.event.MouseAdapter() {
-
-		    @Override
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        acceder.setBackground(verdeHover);
-		        acceder.setForeground(Color.WHITE); 
-		        acceder.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-		    }
-
-		    @Override
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        acceder.setBackground(verde);
-		        acceder.setForeground(Color.BLACK);
-		        acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		    }
-		});
-		    
-		registrarC = new JButton();
-		registrarC.setText("No tengo una cuenta...");
-		registrarC.setLocation(145,478);
-		registrarC.setSize(210,20);
-		registrarC.setOpaque(false);
-		registrarC.setForeground(Color.black);
-		registrarC.setFont(new Font("Tahoma", Font.ITALIC, 17));
-		registrarC.setContentAreaFilled(false);
-		registrarC.setBorderPainted(false);     
-		registrarC.setFocusPainted(false);
-		
-		registrarC.addActionListener(e ->{
-			this.router("registro");
-		});
-		
-		
-		registrarC.addMouseListener(new java.awt.event.MouseAdapter() {
-
-		    @Override
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        registrarC.setForeground(Color.blue); 
-		    }
-
-		    @Override
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	registrarC.setForeground(Color.black);
-		    }
-		});
-		contenedor.add(registrarC);
-	
-		JLabel recuperar = new JLabel();
-		recuperar.setText("Recuperar contraseña");
-		recuperar.setSize(200,30);
-		recuperar.setLocation(230,290);
-		recuperar.setOpaque(false);
-		recuperar.setFont(new Font("Arial",Font.ITALIC,13));
-		recuperar.setHorizontalAlignment(JLabel.CENTER);
-		recuperar.setForeground(Color.blue);
-		contenedor.add(recuperar);
-		
-		JCheckBox recordar = new JCheckBox();
-		recordar.setSize(120,30);
-		recordar.setLocation(96,290);
-		recordar.setOpaque(false);
-		recordar.setText("Recordarme");
-		recordar.setFont(new Font("Arial",Font.ITALIC,13));
-		contenedor.add(recordar);
-		
-		
-		//iconos
-		Icono iconoUsuario = new Icono("usuarioVerde.png",35,35);
-		iconoUsuario.setLocation(62,187);
-		iconoUsuario.setOpaque(true);
-		contenedor.add(iconoUsuario);
-		
-		Icono iconoCandado = new Icono("candadoVerde.png",35,35);
-		iconoCandado.setLocation(62,254);
-		iconoCandado.setOpaque(true);
-		contenedor.add(iconoCandado);
-		
-		contenedor.repaint();
-		contenedor.revalidate();
-		
-	}
 	
 	public void registro() {
 		//marco de registtro
@@ -716,7 +511,7 @@ public class Ventana extends JFrame implements ActionListener {
 	}
 	
 	public void users() {
-		direccion="login";
+		direccion="como_recuperar";
 		JPanel users= new JPanel();
 		users.setSize(900,500);
 		users.setLocation(45,100);
@@ -1035,9 +830,6 @@ public class Ventana extends JFrame implements ActionListener {
 			this.registro();
 		}
 		
-		if(target.equals("login")) {
-			this.login();
-		}
 		
 		if(target.equals("recuperar")) {
 			this.registro();

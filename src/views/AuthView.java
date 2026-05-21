@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import controllers.AuthController;
+import controllers.UsersController;
 import programacion_3.Icono;
 
 public class AuthView extends JFrame {
@@ -33,6 +34,10 @@ public class AuthView extends JFrame {
 	private JPanel cargando;
 	private JButton acceder,registrarC,volver;
 	private AuthController controller;
+	
+	public AuthView(AuthController controller){
+	    this.controller = controller;
+	}
 	
 	public void login() {
 		this.setVisible(true);
@@ -120,25 +125,25 @@ public class AuthView extends JFrame {
 		acceder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		contenedor.add(acceder);
 		acceder.addActionListener(e-> {
-			String usuario = username.getText();
-		    String password = new String(psw.getPassword());
-		   controller=new AuthController();
-		    if(!controller.autenticar(usuario, password)) {
-		    	
-		    	psw.setBorder(new LineBorder(new Color(255, 0, 0), 2, true));
-		    	username.setBorder(new LineBorder(new Color(255, 0, 0), 2, true));
-		    	
-		    }else {
-		    	psw.setBorder(new LineBorder(new Color(203, 213, 225), 2, true));
-		    	username.setBorder(new LineBorder(new Color(203, 213, 225), 2, true));
-		    	username.setForeground(new Color(0, 0, 0));
-				psw.setForeground(new Color(0, 0, 0));
-				
-				this.dispose();
+		    String usuario = username.getText();
+		    String password =new String(psw.getPassword());
+		    if(!controller.login(usuario,password)) {
+		        psw.setBorder(
+		            new LineBorder(Color.RED,2,true)
+		        );
+		        username.setBorder(
+		            new LineBorder(Color.RED,2,true)
+		        );
+		    } else {
+		        psw.setBorder(new LineBorder(new Color(203,213,225),2,true));
+		        username.setBorder(new LineBorder( new Color(203,213,225),2,true));
+		        
+		        JOptionPane.showMessageDialog(null,"Acceso correcto");
+
+		        this.dispose();
+		        new UsersController();
 		    }
 		});
-		
-		
 		
 		acceder.addMouseListener(new java.awt.event.MouseAdapter() {
 

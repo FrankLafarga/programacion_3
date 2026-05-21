@@ -1,24 +1,15 @@
 package views;
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -36,11 +27,11 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
+import controllers.UsersController;
+import models.User;
 import programacion_3.Icono;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class AppView extends JFrame implements ActionListener {
 	Color verde=new Color(140,180,140);
@@ -62,26 +53,47 @@ public class AppView extends JFrame implements ActionListener {
 	private String direccion="login";
 	private JPanel contenedor;
 	private JPanel cargando;
+	private UsersController controller;
+	private JTable users_table;
+	private DefaultTableModel modelo;
 	private JButton acceder,registrarC,volver;
 	
-	public AppView() {
-		
-		this.setVisible(true);
-		this.setSize(1000,750);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setMinimumSize(new Dimension(450,450));
-		this.setMaximumSize(new Dimension(1050,770));
-		this.setTitle("Estudiantes");
-		this.setLayout(null);
-		this.getContentPane().setBackground(verdeClaro);
-		this.router("users");
-		
-		this.repaint();
-		this.revalidate();
+	public AppView(UsersController controller) {
+
+	    this.controller = controller;
+
+	    this.setVisible(true);
+	    this.setSize(1000,750);
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    this.setLocationRelativeTo(null);
+	    this.setMinimumSize(new Dimension(450,450));
+	    this.setMaximumSize(new Dimension(1050,770));
+	    this.setTitle("Estudiantes");
+	    this.setLayout(null);
+	    this.getContentPane().setBackground(verdeClaro);
+
+	    this.router("users");
+
+	    this.repaint();
+	    this.revalidate();
 	}
 	
-	
+	public AppView( ) {
+	    this.setVisible(true);
+	    this.setSize(1000,750);
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    this.setLocationRelativeTo(null);
+	    this.setMinimumSize(new Dimension(450,450));
+	    this.setMaximumSize(new Dimension(1050,770));
+	    this.setTitle("Estudiantes");
+	    this.setLayout(null);
+	    this.getContentPane().setBackground(verdeClaro);
+
+	    this.router("users");
+
+	    this.repaint();
+	    this.revalidate();
+	}
 	
 	
 	public void registro() {
@@ -511,71 +523,86 @@ public class AppView extends JFrame implements ActionListener {
 	}
 	
 	public void users() {
-		direccion="como_recuperar";
-		JPanel users= new JPanel();
-		users.setSize(900,500);
-		users.setLocation(45,100);
-		users.setBackground(Color.white);
-		users.setLayout(null);
-		this.add(users);
-		
-		JLabel users_title=new JLabel("USUARIOS");
-		users_title.setBounds(325,30,250,40);
-		users_title.setOpaque(false);
-		users_title.setFont(new Font("Tahoma", Font.BOLD, 25));
-		users_title.setHorizontalAlignment(JLabel.CENTER);
-		users.add(users_title);
-		
-		JButton export = new JButton("Exportar");
-		export.setBounds(30,90,100,40);
-		export.setFont(new Font("Tahoma", Font.BOLD, 13));
-		users.add(export);
-		
-		JButton add = new JButton("Añadir");
-		add.setBounds(140,90,100,40);
-		add.setFont(new Font("Tahoma", Font.BOLD, 13));
-		add.addActionListener(e->{
-			this.router("alta_usuario");
-		});
-		users.add(add);
-		
-		Object[] table_head = {"No. control", "Nombre", "Apellidos", "Semestre", "Promedio", "Acciones"};
-		
-		Object [][] table_content = {
-			    {"22104567", "María Fernanda", "López Hernández", "5", "9.2", "Editar/Eliminar"},
-			    {"21103218", "Carlos Eduardo", "Ramírez Torres", "7", "8.7", "Editar/Eliminar"},
-			    {"23105644", "Ana Sofía", "García Martínez", "3", "9.5", "Editar/Eliminar"},
-			    {"20109876", "Luis Alberto", "Sánchez Cruz", "8", "8.9", "Editar/Eliminar"},
-			    {"22106754", "Valeria", "Morales Ruiz", "4", "9.1", "Editar/Eliminar"},
-			    {"21104539", "Diego Armando", "Pérez Navarro", "6", "8.4", "Editar/Eliminar"},
-			    {"23102311", "Camila", "Ortega Flores", "2", "9.6", "Editar/Eliminar"},
-			    {"20103422", "Jorge Iván", "Castillo Vega", "9", "8.2", "Editar/Eliminar"},
-			    {"22107890", "Fernanda", "Mendoza Salas", "1", "9.8", "Editar/Eliminar"},
-			    {"21105673", "Ricardo", "Delgado Romero", "5", "8.6", "Editar/Eliminar"},
-			    {"22108812", "Alejandro", "Guzmán Orozco", "4", "8.5", "Editar/Eliminar"},
-			    {"23109923", "Ximena", "Rojas Duarte", "2", "9.4", "Editar/Eliminar"},
-			    {"21101145", "Roberto", "Villarreal Kent", "6", "7.9", "Editar/Eliminar"},
-			    {"20102256", "Paola", "Soto Mayorga", "8", "9.0", "Editar/Eliminar"},
-			    {"22103367", "Mauricio", "Luna Valdés", "4", "8.8", "Editar/Eliminar"},
-			    {"23104478", "Daniela", "Bravo Esparza", "1", "9.7", "Editar/Eliminar"},
-			    {"21105589", "Gabriel", "Peralta Silva", "7", "8.3", "Editar/Eliminar"},
-			    {"20106690", "Lucía", "Castañeda Ríos", "9", "9.9", "Editar/Eliminar"},
-			    {"22107701", "Esteban", "Meza Galindo", "3", "8.1", "Editar/Eliminar"},
-			    {"23108812", "Natalia", "Vargas Montes", "2", "9.3", "Editar/Eliminar"}
-			};
-		
-		JTable users_table=new JTable(table_content,table_head);
-		JScrollPane scrollPane=new JScrollPane(users_table);
 
-		scrollPane.setLocation(30,200);
-		scrollPane.setSize(800,150);
-		users_table.setBorder(BorderFactory.createLineBorder(Color.black));
-		users.add(scrollPane);
-		
-		
-		
-		
-		users.repaint();
+    direccion="como_recuperar";
+
+    JPanel users= new JPanel();
+    users.setSize(900,500);
+    users.setLocation(45,100);
+    users.setBackground(Color.white);
+    users.setLayout(null);
+
+    this.add(users);
+
+    JLabel users_title=new JLabel("USUARIOS");
+    users_title.setBounds(325,30,250,40);
+    users_title.setFont(new Font("Tahoma", Font.BOLD,25));
+    users_title.setHorizontalAlignment(JLabel.CENTER);
+
+    users.add(users_title);
+
+    JButton export = new JButton("Exportar");
+    export.setBounds(30,90,100,40);
+
+    users.add(export);
+
+    JButton add = new JButton("Nuevo Registro");
+    add.setBounds(140,90,150,40);
+
+    add.addActionListener(e->{
+
+        this.router("alta_usuario");
+
+    });
+
+    users.add(add);
+
+
+
+    String columnas[] = {
+            "Correo",
+            "Nombre",
+            "Password"
+    };
+
+
+
+    modelo = new DefaultTableModel();
+    modelo.setColumnIdentifiers(columnas);
+
+    users_table = new JTable(modelo);
+    cargarTabla();
+    JScrollPane scrollPane = new JScrollPane(users_table);
+
+    scrollPane.setBounds(30,200,800,200);
+
+    users.add(scrollPane);
+
+    users.repaint();
+    users.revalidate();
+	}
+	
+	public void cargarTabla() {
+
+	    modelo.setRowCount(0);
+
+	    ArrayList<User> lista =
+	            controller.obtenerUsuarios();
+
+	    for(User u : lista){
+
+	        Object fila[] = {
+
+	            u.getUsername(),
+	            u.getNombreCompleto(),
+	            u.getPassword()
+
+	        };
+
+	        modelo.addRow(fila);
+
+	    }
+
 	}
 	
 	public void menu() {
@@ -892,49 +919,55 @@ public class AppView extends JFrame implements ActionListener {
 	    JPanel centro = new JPanel();
 	    centro.setBackground(new Color(240, 240, 240));
 	    centro.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1));
-	    centro.setLayout(new GridLayout(5, 2, 10, 10));
-	    centro.setBorder(BorderFactory.createCompoundBorder(
-	            centro.getBorder(), 
-	            BorderFactory.createEmptyBorder(20, 20, 20, 20)));
-	    JLabel lblControl = new JLabel("No. control: ");
-	    lblControl.setFont(fuenteLabel);
-	    JTextField txtControl = new JTextField();
-	    txtControl.setFont(fuenteCampo);
-	    centro.add(lblControl);
-	    centro.add(txtControl);
+	    centro.setLayout(new GridLayout(3,2,10,10));
+	    centro.setBorder(BorderFactory.createCompoundBorder(centro.getBorder(),BorderFactory.createEmptyBorder(20, 20, 20, 20)));
+	    
+	    JLabel lblCorreo = new JLabel("Username:");
+	    lblCorreo.setFont(fuenteLabel);
+	    JTextField txtCorreo = new JTextField();
+	    txtCorreo.setFont(fuenteCampo);
+	    centro.add(lblCorreo);
+	    centro.add(txtCorreo);
 
-	    JLabel lblNombre = new JLabel("Nombre: ");
+	    JLabel lblPassword = new JLabel("Password:");
+	    lblPassword.setFont(fuenteLabel);
+	    JPasswordField txtPassword = new JPasswordField();
+	    txtPassword.setFont(fuenteCampo);
+	    
+	    centro.add(lblPassword);
+	    centro.add(txtPassword);
+
+	    JLabel lblNombre = new JLabel("Nombre:");
 	    lblNombre.setFont(fuenteLabel);
 	    JTextField txtNombre = new JTextField();
 	    txtNombre.setFont(fuenteCampo);
+	    
 	    centro.add(lblNombre);
 	    centro.add(txtNombre);
-
-	    JLabel lblApellidos = new JLabel("Apellidos: ");
-	    lblApellidos.setFont(fuenteLabel);
-	    JTextField txtApellidos = new JTextField();
-	    txtApellidos.setFont(fuenteCampo);
-	    centro.add(lblApellidos);
-	    centro.add(txtApellidos);
-
-	    JLabel lblSemestre = new JLabel("Semestre: ");
-	    lblSemestre.setFont(fuenteLabel);
-	    JTextField txtSemestre = new JTextField();
-	    txtSemestre.setFont(fuenteCampo);
-	    centro.add(lblSemestre);
-	    centro.add(txtSemestre);
-
-	    JLabel lblPromedio = new JLabel("Promedio: ");
-	    lblPromedio.setFont(fuenteLabel);
-	    JTextField txtPromedio = new JTextField();
-	    txtPromedio.setFont(fuenteCampo);
-	    centro.add(lblPromedio);
-	    centro.add(txtPromedio);
 	    
 	    JButton botonGuardar = new JButton("Guardar");
 		botonGuardar.setBackground(new Color(240, 240, 240));
 		Icono guardar = new Icono("iconoGuardado.png", 25,30);
 		botonGuardar.add(guardar);
+		botonGuardar.addActionListener(e->{
+		    String correo=txtCorreo.getText();
+		    String password=new String(txtPassword.getPassword());
+		    String nombre=txtNombre.getText();
+		    
+		    if(correo.equals("") ||password.equals("") ||nombre.equals("")){
+		    	
+		        JOptionPane.showMessageDialog( panelAlta,"Complete los campos");
+		    }else{
+
+		        boolean estado= controller.addUser( correo,password, nombre);
+		        if(estado){
+		            JOptionPane.showMessageDialog( panelAlta, "Usuario registrado");
+		            this.router("users");
+		            cargarTabla();
+		        }else{JOptionPane.showMessageDialog(panelAlta,"Error al guardar");
+		        }
+		    }
+		});
 		panelAlta.add(botonGuardar, BorderLayout.SOUTH);
 		
 	    panelAlta.add(centro, BorderLayout.CENTER);

@@ -1,25 +1,99 @@
 package models;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
 public class UserModel {
-	private int id;
-    private String username;
-    private String rol;
 
-    public UserModel(int id, String username, String rol) {
-        this.id = id;
-        this.username = username;
-        this.rol = rol;
+    private Connection conn;
+
+    public UserModel() {
+
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/programacion",
+                    "root",
+                    "educadex2026"
+            );
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    public String getUsername() {
-        return username;
+    public ArrayList<User> obtenerUsuarios() {
+
+        ArrayList<User> listaUsuarios = new ArrayList<>();
+
+        try {
+
+            String sql = "SELECT * FROM usuarios";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                User user = new User();
+
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setNombreCompleto(rs.getString("nombre_completo"));
+
+                listaUsuarios.add(user);
+
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return listaUsuarios;
+
     }
 
-    public String getRol() {
-        return rol;
+    public boolean registrarUsuario(User u) {
+
+        try {
+
+            String sql = """
+                    INSERT INTO usuarios
+                    (username, password, nombre_completo)
+                    VALUES (?, ?, ?)
+                    """;
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, u.getUsername());
+            ps.setString(2, u.getPassword());
+            ps.setString(3, u.getNombreCompleto());
+
+            int filas = ps.executeUpdate();
+
+            ps.close();
+
+            return filas > 0;
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+        return false;
+
     }
 
-    public int getId() {
-        return id;
-    }
 }

@@ -1,43 +1,22 @@
 package controllers;
+
 import models.AuthModel;
-import models.UserModel;
-import views.AppView;
 import views.AuthView;
 
 public class AuthController {
 
-    private AuthModel model;
-    private AuthView view;
-    private AppView app;
-    private UserModel usuarioActivo;
-
+    private AuthView vista;
+    private AuthModel modelo;
 
     public AuthController() {
-    	model= new AuthModel();
-    	view= new AuthView();
+        modelo = new AuthModel();
+        vista = new AuthView(this);
     }
-    
-    public void login() {
-    	view.login();
+    public void showLogin() {
+        vista.login();;
     }
 
-    public boolean autenticar(String usuario, String password) {
-        UserModel u = model.validarUsuario(usuario, password);
-
-        if (u!=null) {     
-            usuarioActivo = u;
-        	app = new AppView();
-        	
-           
-            return true;
-        } else { return false; 
-        	}
+    public boolean login(String user, String pass) {
+        return modelo.acces(user, pass);
     }
-    
-    public void logout() {
-        usuarioActivo = null;
-       // app.dispose();
-        view.login();
-    }    
-    
 }

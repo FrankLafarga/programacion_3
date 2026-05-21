@@ -7,30 +7,57 @@ import java.sql.ResultSet;
 
 public class AuthModel {
 
-	public UserModel validarUsuario(String user, String password) {
+    private Connection conn;
 
-	    String sql = "SELECT id_usuario, username, rol FROM usuarios WHERE username = ? AND password_hash = ? AND estatus='ACTIVO'";
+    public AuthModel() {
 
-	    try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/educadex","root","educadex2026");
-	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try {
 
-	        stmt.setString(1, user);
-	        stmt.setString(2, password);
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/programacion",
+                    "root",
+                    "educadex2026"
+            );
 
-	        ResultSet rs = stmt.executeQuery();
 
-	        if (rs.next()||user.equals("")||password.equals("")) {
-	            return new UserModel(
-	                rs.getInt("id_usuario"),
-	                rs.getString("username"),
-	                rs.getString("rol")
-	            );
-	        }
+        } catch(Exception e) {
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+            System.out.println("Error de conexion: " + e.getMessage());
 
-	    return null;
-	}
+        }
+
+    }
+
+    public boolean acces(String user, String password) {
+
+        try {
+
+            String sql = """
+                SELECT * FROM admin
+                WHERE username = ?
+                AND password = ?
+            """;
+
+            PreparedStatement pass = conn.prepareStatement(sql);
+
+            pass.setString(1, user);
+            pass.setString(2, password);
+
+            ResultSet rs = pass.executeQuery();
+
+            if(rs.next()) {
+
+                return true;
+
+            }
+
+        } catch (Exception e) {
+
+            System.out.println("Error query: " + e.getMessage());
+
+        }
+
+        return false;
+    }
+
 }
